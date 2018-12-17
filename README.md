@@ -14,7 +14,7 @@ Get and save information about change money loans.
 * ASP .NET Core Web API 2.2
 * MS-SQL, EF Code First approach
 
-## Repo
+## Repo:
 The type of commit is contained within the title and can be one of these types:
 
 * Feat: a new feature
