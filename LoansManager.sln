@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoansManager", "LoansManager\LoansManager.csproj", "{1FB31B96-C784-4B35-90A8-5B4251AFD6F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoansManager.DAL", "LoansManager.DAL\LoansManager.DAL.csproj", "{99B793A3-31EA-4462-BD86-491ABD996E98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoansManager.Services", "LoansManager.Services\LoansManager.Services.csproj", "{F4B2989D-DFF0-4FA5-B066-A45547C21819}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoansManager.UnitTest", "LoansManager.UnitTest\LoansManager.UnitTest.csproj", "{EDEF87ED-6867-4540-BE3A-281F9AB16E39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoansManager.E2ETest", "LoansManager.E2ETest\LoansManager.E2ETest.csproj", "{81BB593E-E291-4CF1-98A9-7A11927973CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoansManager.Domain", "LoansManager.Domain\LoansManager.Domain.csproj", "{CB7F628C-926C-45CB-B500-3645A96D2590}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1FB31B96-C784-4B35-90A8-5B4251AFD6F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FB31B96-C784-4B35-90A8-5B4251AFD6F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FB31B96-C784-4B35-90A8-5B4251AFD6F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FB31B96-C784-4B35-90A8-5B4251AFD6F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99B793A3-31EA-4462-BD86-491ABD996E98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99B793A3-31EA-4462-BD86-491ABD996E98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99B793A3-31EA-4462-BD86-491ABD996E98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99B793A3-31EA-4462-BD86-491ABD996E98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4B2989D-DFF0-4FA5-B066-A45547C21819}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4B2989D-DFF0-4FA5-B066-A45547C21819}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4B2989D-DFF0-4FA5-B066-A45547C21819}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4B2989D-DFF0-4FA5-B066-A45547C21819}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDEF87ED-6867-4540-BE3A-281F9AB16E39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDEF87ED-6867-4540-BE3A-281F9AB16E39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDEF87ED-6867-4540-BE3A-281F9AB16E39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDEF87ED-6867-4540-BE3A-281F9AB16E39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81BB593E-E291-4CF1-98A9-7A11927973CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81BB593E-E291-4CF1-98A9-7A11927973CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81BB593E-E291-4CF1-98A9-7A11927973CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81BB593E-E291-4CF1-98A9-7A11927973CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB7F628C-926C-45CB-B500-3645A96D2590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB7F628C-926C-45CB-B500-3645A96D2590}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB7F628C-926C-45CB-B500-3645A96D2590}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB7F628C-926C-45CB-B500-3645A96D2590}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BC06BCC6-49ED-4F95-BD19-E0586549F033}
+	EndGlobalSection
+EndGlobal
