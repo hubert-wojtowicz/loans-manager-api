@@ -12,6 +12,8 @@ namespace LoansManager.Config
         {
             builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
             builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
+
+            builder.RegisterType<EncrypterService>().As<IEncypterService>().InstancePerLifetimeScope();
         }
     }
 }

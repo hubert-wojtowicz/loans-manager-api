@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LoansManager.DAL\LoansManager.DAL.csproj" />
     <ProjectReference Include="..\LoansManager.Domain\LoansManager.Domain.csproj" />
+    <ProjectReference Include="..\LoansManager.Util\LoansManager.Util.csproj" />
   </ItemGroup>
 
   <ItemGroup>
