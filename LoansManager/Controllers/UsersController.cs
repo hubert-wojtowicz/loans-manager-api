@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using LoansManager.Domain;
+using LoansManager.Resources;
 using LoansManager.Services.Dtos;
 using LoansManager.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -13,14 +15,17 @@ namespace LoansManager.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IMapper mapper;
+        private readonly IJwtService jwtService;
         private readonly IUserService userService;
         private readonly int MaxNumberOfRecordToGet=100;
 
         public UsersController(
             IMapper mapper,
+            IJwtService jwtService,
             IUserService userService)
         {
             this.mapper = mapper;
+            this.jwtService = jwtService;
             this.userService = userService;
         }
         
@@ -28,7 +33,7 @@ namespace LoansManager.Controllers
         public async Task<IActionResult> GetManyUsersAsync([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
         {
             if (take > MaxNumberOfRecordToGet)
-                return BadRequest("To many records requested.");
+                return BadRequest(UserControllerResources.MaxNumberOfRecordToGetExceeded);
 
             var users = await userService.GetUsersAsync(offset, take);
 
@@ -43,6 +48,18 @@ namespace LoansManager.Controllers
         {
             await userService.RegisterUserAsync(createUserDto);
             return Created($"Users/{createUserDto.UserName}", mapper.Map<ViewUserDto>(createUserDto));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AuthenticateAsync([FromBody]AuthenticateUserDto credentials)
+        {
+            if (await userService.AuthenticateUserAsync(credentials))
+            {
+                var token = jwtService.GenerateToken(credentials.UserName, Roles.Admin);
+                return Ok(token);
+            }
+
+            return BadRequest(UserControllerResources.AuthenticationFailed);
         }
     }
 }

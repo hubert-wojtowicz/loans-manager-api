@@ -25,5 +25,9 @@ namespace LoansManager.DAL.Repositories
                 .Skip(offset)
                 .Take(take)
                 .ToListAsync();
+
+        public async Task<UserEntity> GetByUserName(string userName)
+            => await Get()
+                .FirstAsync(x => x.UserName == userName);            
     }
 }

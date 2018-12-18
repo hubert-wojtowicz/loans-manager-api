@@ -1,15 +1,19 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using LoansManager.Config;
+using LoansManager.Config.IoCModules;
 using LoansManager.DAL;
 using LoansManager.Services.Config;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Text;
 
 namespace LoansManager
 {
@@ -31,11 +35,31 @@ namespace LoansManager
 
             services
                 .AddSingleton(AutomapperConfig.Initialize())
-                .AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                .AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")))
+                .AddAuthentication(opt =>
+                {
+                    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(opt =>
+                {
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"])),
+                    };
+                });
 
             var builder = new ContainerBuilder();
             AutofacConfig.Register(builder);
             builder.Populate(services);
+            builder.RegisterModule(new SettingsModule(Configuration));
             AutofacContainer = builder.Build();
 
             return new AutofacServiceProvider(AutofacContainer);
@@ -53,8 +77,9 @@ namespace LoansManager
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseAuthentication()
+               .UseHttpsRedirection()
+               .UseMvc();
         }
     }
 }

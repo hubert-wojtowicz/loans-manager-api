@@ -8,5 +8,6 @@ namespace LoansManager.Services.Interfaces
     {
         Task<IEnumerable<ViewUserDto>> GetUsersAsync(int offset = 0, int take = 15);
         Task RegisterUserAsync(CreateUserDto createUserDto);
+        Task<bool> AuthenticateUserAsync(AuthenticateUserDto credentials);
     }
 }

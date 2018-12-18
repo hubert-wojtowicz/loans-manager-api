@@ -9,13 +9,16 @@ namespace LoansManager.Services.Implementations
 {
     public class UserService : IUserService
     {
+        private readonly IEncypterService encypterService;
         private readonly IMapper mapper;
         private readonly IUserRepository userRepository;
 
         public UserService(
+            IEncypterService encypterService,
             IMapper mapper,
             IUserRepository userRepository)
         {
+            this.encypterService = encypterService;
             this.mapper = mapper;
             this.userRepository = userRepository;
         }
@@ -29,6 +32,13 @@ namespace LoansManager.Services.Implementations
         public Task RegisterUserAsync(CreateUserDto createUserDto)
         {
             throw new System.NotImplementedException();
+        }
+
+        public async Task<bool> AuthenticateUserAsync(AuthenticateUserDto credentials)
+        {
+            var user = await userRepository.GetByUserName(credentials.UserName);
+
+            return user == null || encypterService.GetHash(credentials.Password, user.Salt) == user.Password ? false : true;
         }
     }
 }
