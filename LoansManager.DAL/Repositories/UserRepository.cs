@@ -28,6 +28,6 @@ namespace LoansManager.DAL.Repositories
 
         public async Task<UserEntity> GetByUserName(string userName)
             => await Get()
-                .FirstAsync(x => x.UserName == userName);            
+                .SingleOrDefaultAsync(x => x.UserName == userName);           
     }
 }
