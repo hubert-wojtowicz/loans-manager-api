@@ -10,11 +10,11 @@ using System.Text;
 
 namespace LoansManager.Services.Implementations
 {
-    public class JwtHandler : IJwtService
+    public class JwtService : IJwtService
     {
         private readonly JwtSettings _settings;
 
-        public JwtHandler(JwtSettings settings)
+        public JwtService(JwtSettings settings)
         {
             _settings = settings;
         }
