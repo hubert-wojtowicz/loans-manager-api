@@ -7,6 +7,7 @@ using LoansManager.Resources;
 using LoansManager.Services.Config.SettingsModels;
 using LoansManager.Services.Dtos;
 using LoansManager.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LoansManager.Controllers
@@ -46,7 +47,9 @@ namespace LoansManager.Controllers
             return NotFound();
         }
 
-        [HttpPost]
+        [HttpPost] 
+        [Route("register")]
+        [AllowAnonymous]
         public async Task<IActionResult> RegisterUserAsync([FromBody]CreateUserDto createUserDto)
         {
             await userService.RegisterUserAsync(createUserDto);
@@ -54,6 +57,8 @@ namespace LoansManager.Controllers
         }
 
         [HttpPost]
+        [Route("auth")]
+        [AllowAnonymous]
         public async Task<IActionResult> AuthenticateAsync([FromBody]AuthenticateUserDto credentials)
         {
             if (await userService.AuthenticateUserAsync(credentials))
