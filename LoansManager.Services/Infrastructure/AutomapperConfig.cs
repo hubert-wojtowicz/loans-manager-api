@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LoansManager.CommandHandlers.Commands;
 using LoansManager.Domain;
 using LoansManager.Services.Dtos;
 
@@ -9,7 +10,7 @@ namespace LoansManager.Services.Config
         public static IMapper Initialize()
             => new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<CreateUserDto, UserEntity>();
+                cfg.CreateMap<RegisterUserCommand, UserEntity>();
                 cfg.CreateMap<ViewUserDto, UserEntity>();
             })
             .CreateMapper();

@@ -2,8 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using LoansManager.CommandHandlers.Commands;
 using LoansManager.Domain;
 using LoansManager.Resources;
+using LoansManager.Services.CommandHandlers.Dispatcher;
 using LoansManager.Services.Config.SettingsModels;
 using LoansManager.Services.Dtos;
 using LoansManager.Services.Interfaces;
@@ -20,17 +22,21 @@ namespace LoansManager.Controllers
         private readonly IMapper mapper;
         private readonly IJwtService jwtService;
         private readonly IUserService userService;
+        private readonly ICommandDispatcher dispatecher;
 
         public UsersController(
             ApiSettings apiSettings,
             IMapper mapper,
             IJwtService jwtService,
-            IUserService userService)
+            IUserService userService,
+            ICommandDispatcher dispatecher
+            )
         {
             this.apiSettings = apiSettings;
             this.mapper = mapper;
             this.jwtService = jwtService;
             this.userService = userService;
+            this.dispatecher = dispatecher;
         }
         
         [HttpGet]
@@ -47,12 +53,12 @@ namespace LoansManager.Controllers
             return NotFound();
         }
 
-        [HttpPost] 
+        [HttpPost]
         [Route("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> RegisterUserAsync([FromBody]CreateUserDto createUserDto)
+        public async Task<IActionResult> RegisterUserAsync([FromBody]RegisterUserCommand createUserDto)
         {
-            await userService.RegisterUserAsync(createUserDto);
+            await dispatecher.Submit(createUserDto);
             return Created($"Users/{createUserDto.UserName}", mapper.Map<ViewUserDto>(createUserDto));
         }
 

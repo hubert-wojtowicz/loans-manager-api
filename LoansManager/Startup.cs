@@ -69,6 +69,7 @@ namespace LoansManager
             AutofacConfig.Register(builder);
             builder.Populate(services);
             builder.RegisterModule(new SettingsModule(Configuration));
+            builder.RegisterModule<CommandModule>();
             AutofacContainer = builder.Build();
 
             return new AutofacServiceProvider(AutofacContainer);

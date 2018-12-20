@@ -29,11 +29,6 @@ namespace LoansManager.Services.Implementations
             return mapper.Map<IEnumerable<ViewUserDto>>(users);
         }
 
-        public Task RegisterUserAsync(CreateUserDto createUserDto)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public async Task<bool> AuthenticateUserAsync(AuthenticateUserDto credentials)
         {
             var user = await userRepository.GetByUserName(credentials.UserName);
