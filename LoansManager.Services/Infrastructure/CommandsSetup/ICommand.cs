@@ -1,4 +1,4 @@
-﻿namespace LoansManager.Services.CommandHandlers.Interface
+﻿namespace LoansManager.Services.Infrastructure.CommandsSetup
 {
     public interface ICommand
     {

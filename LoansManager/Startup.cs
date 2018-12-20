@@ -1,9 +1,9 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using LoansManager.Config;
-using LoansManager.Config.IoCModules;
 using LoansManager.DAL;
-using LoansManager.Services.Config;
+using LoansManager.Services.Infrastructure;
+using LoansManager.Services.Infrastructure.IoC;
+using LoansManager.Services.Infrastructure.IoC.Modules;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;

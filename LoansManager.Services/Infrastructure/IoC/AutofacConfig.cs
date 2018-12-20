@@ -1,10 +1,10 @@
 ﻿using Autofac;
 using LoansManager.DAL.Repositories;
 using LoansManager.DAL.Repositories.Interfaces;
-using LoansManager.Services.Implementations;
-using LoansManager.Services.Interfaces;
+using LoansManager.Services.Implementations.Services;
+using LoansManager.Services.ServicesContracts;
 
-namespace LoansManager.Config
+namespace LoansManager.Services.Infrastructure.IoC
 {
     public static class AutofacConfig
     {

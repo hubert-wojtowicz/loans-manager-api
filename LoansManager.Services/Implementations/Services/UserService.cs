@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using LoansManager.DAL.Repositories.Interfaces;
 using LoansManager.Services.Dtos;
-using LoansManager.Services.Interfaces;
+using LoansManager.Services.ServicesContracts;
 
-namespace LoansManager.Services.Implementations
+namespace LoansManager.Services.Implementations.Services
 {
     public class UserService : IUserService
     {

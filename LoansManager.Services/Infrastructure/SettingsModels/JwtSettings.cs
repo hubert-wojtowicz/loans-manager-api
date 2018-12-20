@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LoansManager.Services.Config.SettingsModels
+﻿namespace LoansManager.Services.Infrastructure.SettingsModels
 {
     public class JwtSettings
     {

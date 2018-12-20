@@ -1,8 +1,8 @@
 ﻿using Autofac;
-using LoansManager.Services.Config.SettingsModels;
+using LoansManager.Services.Infrastructure.SettingsModels;
 using Microsoft.Extensions.Configuration;
 
-namespace LoansManager.Config.IoCModules
+namespace LoansManager.Services.Infrastructure.IoC.Modules
 {
     public class SettingsModule : Module
     {

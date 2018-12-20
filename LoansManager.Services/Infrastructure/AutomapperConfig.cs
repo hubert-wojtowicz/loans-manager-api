@@ -3,7 +3,7 @@ using LoansManager.CommandHandlers.Commands;
 using LoansManager.Domain;
 using LoansManager.Services.Dtos;
 
-namespace LoansManager.Services.Config
+namespace LoansManager.Services.Infrastructure
 {
     public static class AutomapperConfig
     {

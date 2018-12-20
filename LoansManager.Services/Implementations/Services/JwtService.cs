@@ -1,6 +1,6 @@
-﻿using LoansManager.Services.Config.SettingsModels;
-using LoansManager.Services.Dtos;
-using LoansManager.Services.Interfaces;
+﻿using LoansManager.Services.Dtos;
+using LoansManager.Services.Infrastructure.SettingsModels;
+using LoansManager.Services.ServicesContracts;
 using LoansManager.Util;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -8,7 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace LoansManager.Services.Implementations
+namespace LoansManager.Services.Implementations.Services
 {
     public class JwtService : IJwtService
     {

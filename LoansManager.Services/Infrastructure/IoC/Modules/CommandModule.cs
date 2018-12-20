@@ -1,9 +1,8 @@
 ﻿using Autofac;
-using LoansManager.Services.CommandHandlers.Dispatcher;
-using LoansManager.Services.CommandHandlers.Interface;
+using LoansManager.Services.Infrastructure.CommandsSetup;
 using System.Reflection;
 
-namespace LoansManager.Config.IoCModules
+namespace LoansManager.Services.Infrastructure.IoC.Modules
 {
     public class CommandModule : Autofac.Module
     {

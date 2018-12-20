@@ -1,4 +1,4 @@
-﻿using LoansManager.Services.CommandHandlers.Interface;
+﻿using LoansManager.Services.Infrastructure.CommandsSetup;
 
 namespace LoansManager.CommandHandlers.Commands
 {

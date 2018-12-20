@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using LoansManager.CommandHandlers.Commands;
-using LoansManager.Services.CommandHandlers.Interface;
-using LoansManager.Services.Interfaces;
+using LoansManager.Services.Infrastructure.CommandsSetup;
+using LoansManager.Services.ServicesContracts;
 
-namespace LoansManager.Services.CommandHandlers
+namespace LoansManager.Services.Implementations.CommandHandlers
 {
     public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
     {

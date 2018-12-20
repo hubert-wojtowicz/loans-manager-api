@@ -1,7 +1,6 @@
-﻿using LoansManager.Services.CommandHandlers.Interface;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace LoansManager.Services.CommandHandlers.Dispatcher
+namespace LoansManager.Services.Infrastructure.CommandsSetup
 {
     public interface ICommandDispatcher
     {

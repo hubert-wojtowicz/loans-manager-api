@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace LoansManager.Services.CommandHandlers.Interface
+namespace LoansManager.Services.Infrastructure.CommandsSetup
 {
     public interface ICommandHandler<TCommand> where TCommand : ICommand
     {

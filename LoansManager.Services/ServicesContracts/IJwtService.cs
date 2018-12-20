@@ -1,9 +1,6 @@
 ﻿using LoansManager.Services.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace LoansManager.Services.Interfaces
+namespace LoansManager.Services.ServicesContracts
 {
     public interface IJwtService
     {

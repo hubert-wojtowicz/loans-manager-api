@@ -1,9 +1,8 @@
 ﻿using Autofac;
-using LoansManager.Services.CommandHandlers.Interface;
 using System;
 using System.Threading.Tasks;
 
-namespace LoansManager.Services.CommandHandlers.Dispatcher
+namespace LoansManager.Services.Infrastructure.CommandsSetup
 {
     public class CommandDispatcher : ICommandDispatcher
     {

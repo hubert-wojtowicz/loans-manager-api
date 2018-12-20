@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace LoansManager.Config.IoCModules
+namespace LoansManager.Services.Infrastructure.IoC.Modules
 {
     public static class SettingsExtensions
     {

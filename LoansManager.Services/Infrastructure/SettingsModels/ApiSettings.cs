@@ -1,4 +1,4 @@
-﻿namespace LoansManager.Services.Config.SettingsModels
+﻿namespace LoansManager.Services.Infrastructure.SettingsModels
 {
     public class ApiSettings
     {

@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using LoansManager.CommandHandlers.Commands;
 using LoansManager.Domain;
 using LoansManager.Resources;
-using LoansManager.Services.CommandHandlers.Dispatcher;
-using LoansManager.Services.Config.SettingsModels;
 using LoansManager.Services.Dtos;
-using LoansManager.Services.Interfaces;
+using LoansManager.Services.Infrastructure.CommandsSetup;
+using LoansManager.Services.Infrastructure.SettingsModels;
+using LoansManager.Services.ServicesContracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

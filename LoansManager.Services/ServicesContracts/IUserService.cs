@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace LoansManager.Services.Interfaces
+namespace LoansManager.Services.ServicesContracts
 {
     public interface IUserService
     {

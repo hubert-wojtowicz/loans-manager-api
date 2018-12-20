@@ -1,9 +1,9 @@
-﻿using LoansManager.Services.Interfaces;
+﻿using LoansManager.Services.ServicesContracts;
 using LoansManager.Util;
 using System;
 using System.Security.Cryptography;
 
-namespace LoansManager.Services.Implementations
+namespace LoansManager.Services.Implementations.Services
 {
     public class EncrypterService : IEncypterService
     {

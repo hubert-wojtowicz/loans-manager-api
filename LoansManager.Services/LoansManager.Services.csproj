@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CommandHandlers\Validators\" />
+    <Folder Include="CommandValidators\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 
