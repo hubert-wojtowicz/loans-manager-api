@@ -75,7 +75,7 @@ namespace LoansManager
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
         {
             if (env.IsDevelopment())
             {
@@ -89,6 +89,8 @@ namespace LoansManager
             app.UseAuthentication()
                .UseHttpsRedirection()
                .UseMvc();
+
+            applicationLifetime.ApplicationStopped.Register(() => AutofacContainer.Dispose());
         }
     }
 }
