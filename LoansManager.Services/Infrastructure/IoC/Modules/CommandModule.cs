@@ -1,6 +1,6 @@
 ﻿using Autofac;
+using FluentValidation;
 using LoansManager.Services.Infrastructure.CommandsSetup;
-using System.Reflection;
 
 namespace LoansManager.Services.Infrastructure.IoC.Modules
 {
@@ -8,16 +8,18 @@ namespace LoansManager.Services.Infrastructure.IoC.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            var assembly = typeof(CommandModule)
-                .GetTypeInfo()
-                .Assembly;
-
-            builder.RegisterAssemblyTypes(assembly)
+            builder.RegisterAssemblyTypes(ThisAssembly)
                     .AsClosedTypesOf(typeof(ICommandHandler<>))
                     .InstancePerLifetimeScope();
 
-            builder.RegisterType<CommandDispatcher>()
-                .As<ICommandDispatcher>()
+            builder.RegisterAssemblyTypes(ThisAssembly)
+                .Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
+                .AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            builder.RegisterType<FluentValidationFactory>().AsSelf();
+
+            builder.RegisterType<CommandBus>()
+                .As<ICommandBus>()
                 .InstancePerLifetimeScope();
         }
     }

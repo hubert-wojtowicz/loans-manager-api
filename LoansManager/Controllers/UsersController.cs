@@ -21,23 +21,23 @@ namespace LoansManager.Controllers
         private readonly IMapper mapper;
         private readonly IJwtService jwtService;
         private readonly IUserService userService;
-        private readonly ICommandDispatcher dispatecher;
+        private readonly ICommandBus commandBus;
 
         public UsersController(
             ApiSettings apiSettings,
             IMapper mapper,
             IJwtService jwtService,
             IUserService userService,
-            ICommandDispatcher dispatecher
+            ICommandBus commandBus
             )
         {
             this.apiSettings = apiSettings;
             this.mapper = mapper;
             this.jwtService = jwtService;
             this.userService = userService;
-            this.dispatecher = dispatecher;
+            this.commandBus = commandBus;
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> GetManyUsersAsync([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
         {
@@ -57,7 +57,11 @@ namespace LoansManager.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> RegisterUserAsync([FromBody]RegisterUserCommand createUserDto)
         {
-            await dispatecher.Submit(createUserDto);
+            var validationResult = await commandBus.Validate(createUserDto);
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult);
+
+            await commandBus.Submit(createUserDto);
             return Created($"Users/{createUserDto.UserName}", mapper.Map<ViewUserDto>(createUserDto));
         }
 
