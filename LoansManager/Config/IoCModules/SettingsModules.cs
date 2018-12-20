@@ -16,6 +16,9 @@ namespace LoansManager.Config.IoCModules
         {
             builder.RegisterInstance(configuration.GetSettings<JwtSettings>())
                    .SingleInstance();
+
+            builder.RegisterInstance(configuration.GetSettings<ApiSettings>())
+                   .SingleInstance();
         }
     }
 }

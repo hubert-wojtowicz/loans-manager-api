@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using LoansManager.Domain;
 using LoansManager.Resources;
+using LoansManager.Services.Config.SettingsModels;
 using LoansManager.Services.Dtos;
 using LoansManager.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -14,16 +15,18 @@ namespace LoansManager.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        private readonly ApiSettings apiSettings;
         private readonly IMapper mapper;
         private readonly IJwtService jwtService;
         private readonly IUserService userService;
-        private readonly int MaxNumberOfRecordToGet=100;
 
         public UsersController(
+            ApiSettings apiSettings,
             IMapper mapper,
             IJwtService jwtService,
             IUserService userService)
         {
+            this.apiSettings = apiSettings;
             this.mapper = mapper;
             this.jwtService = jwtService;
             this.userService = userService;
@@ -32,7 +35,7 @@ namespace LoansManager.Controllers
         [HttpGet]
         public async Task<IActionResult> GetManyUsersAsync([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
         {
-            if (take > MaxNumberOfRecordToGet)
+            if (take > apiSettings.MaxNumberOfRecordToGet)
                 return BadRequest(UserControllerResources.MaxNumberOfRecordToGetExceeded);
 
             var users = await userService.GetUsersAsync(offset, take);
