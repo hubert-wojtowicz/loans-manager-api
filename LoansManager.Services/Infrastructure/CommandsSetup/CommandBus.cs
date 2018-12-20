@@ -28,7 +28,7 @@ namespace LoansManager.Services.Infrastructure.CommandsSetup
         }
 
         
-        public async Task<ValidationResult> Validate<TCommand>(TCommand command) where TCommand : ICommand
+        public Task<ValidationResult> Validate<TCommand>(TCommand command) where TCommand : ICommand
         {
             if (command == null)
             {
@@ -37,7 +37,7 @@ namespace LoansManager.Services.Infrastructure.CommandsSetup
             }
             
             var validator = validationFactory.GetValidator(command.GetType());
-            return await validator.ValidateAsync(command);
+            return validator.ValidateAsync(command);
         }
     }
 }

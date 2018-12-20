@@ -4,7 +4,7 @@ using LoansManager.Services.Infrastructure.CommandsSetup;
 
 namespace LoansManager.Services.Infrastructure.IoC.Modules
 {
-    public class CommandModule : Autofac.Module
+    public class CommandModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
