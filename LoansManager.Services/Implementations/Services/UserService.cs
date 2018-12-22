@@ -32,8 +32,7 @@ namespace LoansManager.Services.Implementations.Services
         public async Task<bool> AuthenticateUserAsync(AuthenticateUserDto credentials)
         {
             var user = await userRepository.GetByUserName(credentials.UserName);
-
-            return user == null || encypterService.GetHash(credentials.Password, user.Salt) == user.Password ? false : true;
+            return user != null && encypterService.GetHash(credentials.Password, user.Salt) == user.Password ? true : false;
         }
     }
 }
