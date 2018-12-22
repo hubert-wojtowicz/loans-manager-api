@@ -39,6 +39,7 @@ namespace LoansManager.Controllers
         }
 
         [HttpGet]
+        [Route("getLimited")]
         public async Task<IActionResult> GetManyUsersAsync([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
         {
             if (take > apiSettings.MaxNumberOfRecordToGet)
