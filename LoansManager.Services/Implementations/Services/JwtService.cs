@@ -38,6 +38,7 @@ namespace LoansManager.Services.Implementations.Services
 
             var jwt = new JwtSecurityToken(
                 issuer: _settings.Issuer,
+                audience: _settings.Audience,
                 claims: claims,
                 notBefore: now,
                 expires: expires,
