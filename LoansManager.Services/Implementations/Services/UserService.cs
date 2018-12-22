@@ -23,7 +23,7 @@ namespace LoansManager.Services.Implementations.Services
             this.userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<ViewUserDto>> GetUsersAsync(int offset = 0, int take = 15)
+        public async Task<IEnumerable<ViewUserDto>> GetAsync(int offset = 0, int take = 15)
         {
             var users = await userRepository.GetLimitedAsync(offset, take);
             return mapper.Map<IEnumerable<ViewUserDto>>(users);
@@ -33,6 +33,12 @@ namespace LoansManager.Services.Implementations.Services
         {
             var user = await userRepository.GetByUserName(credentials.UserName);
             return user != null && encypterService.GetHash(credentials.Password, user.Salt) == user.Password ? true : false;
+        }
+
+        public async Task<ViewUserDto> GetAsync(string userName)
+        {
+            var user = await userRepository.GetByUserName(userName);
+            return mapper.Map<ViewUserDto>(user);
         }
     }
 }

@@ -39,13 +39,24 @@ namespace LoansManager.Controllers
         }
 
         [HttpGet]
+        [Route("get/{userName}")]
+        public async Task<IActionResult> Get(string userName)
+        {
+            var user = string.IsNullOrWhiteSpace(userName) ? null : await userService.GetAsync(userName);
+            if (user == null) 
+                BadRequest(string.Format(UserControllerResources.NoUserExists, userName));
+
+            return Ok(user);
+        }
+
+        [HttpGet]
         [Route("getLimited")]
         public async Task<IActionResult> GetManyUsersAsync([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
         {
             if (take > apiSettings.MaxNumberOfRecordToGet)
                 return BadRequest(UserControllerResources.MaxNumberOfRecordToGetExceeded);
 
-            var users = await userService.GetUsersAsync(offset, take);
+            var users = await userService.GetAsync(offset, take);
 
             if (users.Any())
                 return Ok(users);
@@ -63,7 +74,7 @@ namespace LoansManager.Controllers
                 return BadRequest(validationResult);
 
             await commandBus.Submit(createUserDto);
-            return Created($"Users/{createUserDto.UserName}", mapper.Map<ViewUserDto>(createUserDto));
+            return Created($"users/get/{createUserDto.UserName}", mapper.Map<ViewUserDto>(createUserDto));
         }
 
         [HttpPost]
