@@ -39,12 +39,12 @@ namespace LoansManager.Controllers
         }
 
         [HttpGet]
-        [Route("get/{userName}")]
+        [Route("{userName}")]
         public async Task<IActionResult> GetAsync(string userName)
         {
             var user = string.IsNullOrWhiteSpace(userName) ? null : await userService.GetAsync(userName);
             if (user == null) 
-                BadRequest(string.Format(UserControllerResources.NoUserExists, userName));
+                return BadRequest(string.Format(UserControllerResources.NoUserExists, userName));
 
             return Ok(user);
         }
@@ -74,7 +74,7 @@ namespace LoansManager.Controllers
                 return BadRequest(validationResult);
 
             await commandBus.Submit(createUserDto);
-            return Created($"users/get/{createUserDto.UserName}", mapper.Map<ViewUserDto>(createUserDto));
+            return Created($"users/{createUserDto.UserName}", mapper.Map<ViewUserDto>(createUserDto));
         }
 
         [HttpPost]
