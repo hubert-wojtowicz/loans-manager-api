@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation.Results;
 using LoansManager.CommandHandlers.Commands;
 using LoansManager.Domain;
 using LoansManager.Resources;
@@ -43,8 +44,8 @@ namespace LoansManager.Controllers
         public async Task<IActionResult> GetAsync(string userName)
         {
             var user = string.IsNullOrWhiteSpace(userName) ? null : await userService.GetAsync(userName);
-            if (user == null) 
-                return BadRequest(string.Format(UserControllerResources.NoUserExists, userName));
+            if (user == null)
+                return BadRequest(ValidationResultFactory(nameof(ViewUserDto.UserName), userName, UserControllerResources.NoUserExists, userName));
 
             return Ok(user);
         }
@@ -54,10 +55,9 @@ namespace LoansManager.Controllers
         public async Task<IActionResult> GetAsync([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
         {
             if (take > apiSettings.MaxNumberOfRecordToGet)
-                return BadRequest(UserControllerResources.MaxNumberOfRecordToGetExceeded);
+                return BadRequest(ValidationResultFactory(nameof(take), take, UserControllerResources.MaxNumberOfRecordToGetExceeded, apiSettings.MaxNumberOfRecordToGet.ToString()));
 
             var users = await userService.GetAsync(offset, take);
-
             if (users.Any())
                 return Ok(users);
 
@@ -83,12 +83,16 @@ namespace LoansManager.Controllers
         public async Task<IActionResult> AuthenticateAsync([FromBody]AuthenticateUserDto credentials)
         {
             if (await userService.AuthenticateUserAsync(credentials))
-            {
-                var token = jwtService.GenerateToken(credentials.UserName, Roles.Admin);
-                return Ok(token);
-            }
+                return Ok(jwtService.GenerateToken(credentials.UserName, Roles.Admin));
 
-            return BadRequest(UserControllerResources.AuthenticationFailed);
+            return BadRequest(ValidationResultFactory(nameof(credentials), credentials, UserControllerResources.AuthenticationFailed));
+        }
+
+        protected ValidationResult ValidationResultFactory(string propertyName, object attemptedValue, string errorMessageTemplate, params string[] templateParams)
+        {
+            var failure = new ValidationFailure(propertyName, string.Format(errorMessageTemplate, templateParams));
+            failure.AttemptedValue = attemptedValue;
+            return new ValidationResult(new[] { failure });
         }
     }
 }
