@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using LoansManager.DAL.Repositories.Interfaces;
@@ -24,6 +25,12 @@ namespace LoansManager.Services.Implementations.Services
         {
             var loansWithRelatedUsers = await loansRepository.GetWithLenderAndBorrowerAync(id);
             return mapper.Map<ViewLoanDto>(loansWithRelatedUsers);
+        }
+
+        public async Task<IEnumerable<ViewLoanDto>> GetAsync(int offset = 0, int take = 15)
+        {
+            var loans = await loansRepository.GetLimitedWithLenderAndBorrowerAsync(offset, take);
+            return mapper.Map<IEnumerable<ViewLoanDto>>(loans);
         }
     }
 }
