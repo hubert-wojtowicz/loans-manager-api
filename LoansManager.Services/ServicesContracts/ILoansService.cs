@@ -12,5 +12,6 @@ namespace LoansManager.Services.ServicesContracts
         Task<bool> LoanExist(Guid loanId);
         Task<IEnumerable<ViewLoanBorrowerDto>> GetBorrowersAsync(int offset = 0, int take = 15);
         Task<IEnumerable<ViewLoanLenderDto>> GetLendersAsync(int offset = 0, int take = 15);
+        Task<IEnumerable<ViewLoanDto>> GetUserLoansAsync(string userId, int offset = 0, int take = 15);
     }
 }

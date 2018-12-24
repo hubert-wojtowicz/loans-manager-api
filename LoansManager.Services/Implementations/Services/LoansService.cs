@@ -42,8 +42,14 @@ namespace LoansManager.Services.Implementations.Services
 
         public async Task<IEnumerable<ViewLoanLenderDto>> GetLendersAsync(int offset = 0, int take = 15)
         {
-            var lenders = await loansRepository.GeColumnDistnctAsync(x=>x.LenderId ,offset, take);
-            return lenders.Select(x=> new ViewLoanLenderDto { LenderId = x.ToString() });
+            var lenders = await loansRepository.GeColumnDistnctAsync(x => x.LenderId, offset, take);
+            return lenders.Select(x => new ViewLoanLenderDto { LenderId = x.ToString() });
+        }
+
+        public async Task<IEnumerable<ViewLoanDto>> GetUserLoansAsync(string userId, int offset = 0, int take = 15)
+        {
+            var borrowedLoans = await loansRepository.GetFiltered(x => x.BorrowerId == userId, offset, take);
+            return mapper.Map<IEnumerable<ViewLoanDto>>(borrowedLoans);
         }
 
         public async Task<bool> LoanExist(Guid loanId)
