@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace LoansManager.DAL.Repositories
@@ -50,5 +51,12 @@ namespace LoansManager.DAL.Repositories
             context.Loans.Update(loan);
             return context.SaveChangesAsync();
         }
+
+        public Task<List<LoanEntity>> GetFiltered(Expression<Func<LoanEntity, bool>> predicate, int offset, int take)
+            => context.Loans
+                      .Where(predicate)
+                      .Skip(offset)
+                      .Take(take)
+                      .ToListAsync();
     }
 }

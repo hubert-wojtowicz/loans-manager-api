@@ -1,6 +1,7 @@
 ﻿using LoansManager.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace LoansManager.DAL.Repositories.Interfaces
@@ -12,5 +13,6 @@ namespace LoansManager.DAL.Repositories.Interfaces
         Task AddAsync(LoanEntity loanEntity);
         Task<LoanEntity> GetAsync(Guid id);
         Task UpdateAysnc(LoanEntity loan);
+        Task<List<LoanEntity>> GetFiltered(Expression<Func<LoanEntity, bool>> predicate, int offset, int take);
     }
 }
