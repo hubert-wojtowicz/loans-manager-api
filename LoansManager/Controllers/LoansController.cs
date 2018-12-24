@@ -55,6 +55,35 @@ namespace LoansManager.Controllers
             return NotFound();
         }
 
+        [HttpGet]
+        [Route("getBorrowersLimited")]
+        public async Task<IActionResult> GetBorrowersAsync([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
+        {
+            if (take > apiSettings.MaxNumberOfRecordToGet)
+                return BadRequest(ValidationResultFactory(nameof(take), take, UserControllerResources.MaxNumberOfRecordToGetExceeded, apiSettings.MaxNumberOfRecordToGet.ToString()));
+
+            var users = await loansService.GetBorrowersAsync(offset, take);
+            if (users.Any())
+                return Ok(users);
+
+            return NotFound();
+        }
+
+        [HttpGet]
+        [Route("getLendersLimited")]
+        public async Task<IActionResult> GetLendersAsync([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
+        {
+            if (take > apiSettings.MaxNumberOfRecordToGet)
+                return BadRequest(ValidationResultFactory(nameof(take), take, UserControllerResources.MaxNumberOfRecordToGetExceeded, apiSettings.MaxNumberOfRecordToGet.ToString()));
+
+            var users = await loansService.GetLendersAsync(offset, take);
+            if (users.Any())
+                return Ok(users);
+
+            return NotFound();
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody]CreateLoanCommand createLoanCommand)
         {

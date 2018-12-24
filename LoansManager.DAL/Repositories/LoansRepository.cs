@@ -58,5 +58,14 @@ namespace LoansManager.DAL.Repositories
                       .Skip(offset)
                       .Take(take)
                       .ToListAsync();
+
+        public Task<List<dynamic>> GeColumnDistnctAsync(Expression<Func<LoanEntity, dynamic>> selector, int offset, int take)
+            => Get()
+                .OrderBy(selector)
+                .Select(selector)
+                .Distinct()
+                .Skip(offset)
+                .Take(take)
+                .ToListAsync();
     }
 }
