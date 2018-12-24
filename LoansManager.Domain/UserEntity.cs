@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LoansManager.Domain
+﻿namespace LoansManager.Domain
 {
     public class UserEntity
     {

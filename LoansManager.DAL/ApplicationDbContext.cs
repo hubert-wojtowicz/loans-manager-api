@@ -10,6 +10,7 @@ namespace LoansManager.DAL
         { }
 
         public DbSet<UserEntity> Users { get; set; }
+        public DbSet<LoanEntity> Loans { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -8,7 +8,7 @@ namespace LoansManager.DAL.Repositories.Interfaces
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<UserEntity>> GetLimitedAsync(int offset, int take);
+        Task<List<UserEntity>> GetLimitedAsync(int offset, int take);
         Task<UserEntity> GetByUserName(string userName);
         Task AddAsync(UserEntity user);
     }

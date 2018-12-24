@@ -11,7 +11,10 @@ namespace LoansManager.Services.Infrastructure
             => new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<RegisterUserCommand, UserEntity>();
-                cfg.CreateMap<ViewUserDto, UserEntity>();
+                cfg.CreateMap<UserEntity, ViewUserDto>();
+                cfg.CreateMap<LoanEntity, ViewLoanDto>()
+                    .ForMember(x => x.LenderName, y => y.MapFrom(z => z.Lender.UserName))
+                    .ForMember(x => x.BorrowerName, y => y.MapFrom(z => z.Borrower.UserName));
             })
             .CreateMapper();
     }

@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FluentValidation.Results;
 using LoansManager.CommandHandlers.Commands;
 using LoansManager.Domain;
 using LoansManager.Resources;
@@ -16,7 +15,7 @@ namespace LoansManager.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : LoansBaseController
     {
         private readonly ApiSettings apiSettings;
         private readonly IMapper mapper;
@@ -86,13 +85,6 @@ namespace LoansManager.Controllers
                 return Ok(jwtService.GenerateToken(credentials.UserName, Roles.Admin));
 
             return BadRequest(ValidationResultFactory(nameof(credentials), credentials, UserControllerResources.AuthenticationFailed));
-        }
-
-        protected ValidationResult ValidationResultFactory(string propertyName, object attemptedValue, string errorMessageTemplate, params string[] templateParams)
-        {
-            var failure = new ValidationFailure(propertyName, string.Format(errorMessageTemplate, templateParams));
-            failure.AttemptedValue = attemptedValue;
-            return new ValidationResult(new[] { failure });
         }
     }
 }

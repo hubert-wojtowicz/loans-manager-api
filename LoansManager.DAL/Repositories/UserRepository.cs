@@ -19,15 +19,15 @@ namespace LoansManager.DAL.Repositories
         protected IQueryable<UserEntity> Get()
             => context.Set<UserEntity>();
 
-        public async Task<IEnumerable<UserEntity>> GetLimitedAsync(int offset, int take)
-            => await Get()
+        public Task<List<UserEntity>> GetLimitedAsync(int offset, int take)
+            => Get()
                 .OrderBy(x => x.UserName)
                 .Skip(offset)
                 .Take(take)
                 .ToListAsync();
 
-        public async Task<UserEntity> GetByUserName(string userName)
-            => await Get()
+        public Task<UserEntity> GetByUserName(string userName)
+            => Get()
                 .SingleOrDefaultAsync(x => x.UserName == userName);
 
         public async Task AddAsync(UserEntity user)

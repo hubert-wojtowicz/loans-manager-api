@@ -10,6 +10,9 @@ namespace LoansManager.Services.Infrastructure.IoC
     {
         public static void Register(ContainerBuilder builder)
         {
+            builder.RegisterType<LoansService>().As<ILoansService>().InstancePerLifetimeScope();
+            builder.RegisterType<LoansRepository>().As<ILoansRepository>().InstancePerLifetimeScope();
+
             builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
             builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
 
