@@ -39,7 +39,7 @@ namespace LoansManager.Controllers
         }
 
         [HttpGet]
-        [Route("{userName}")]
+        [Route("get/{userName}")]
         public async Task<IActionResult> GetAsync(string userName)
         {
             var user = string.IsNullOrWhiteSpace(userName) ? null : await userService.GetAsync(userName);

@@ -30,7 +30,7 @@ namespace LoansManager.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("get/{id}")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             var loan = await loansService.GetAsync(id);
@@ -84,7 +84,7 @@ namespace LoansManager.Controllers
         }
 
         [HttpGet]
-        [Route("getUsersLoans/{userId}")]
+        [Route("getUsersLoansLimited/{userId}")]
         public async Task<IActionResult> GetUserLoansAsync(string userId, [FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
         {
             if (take > apiSettings.MaxNumberOfRecordToGet)
