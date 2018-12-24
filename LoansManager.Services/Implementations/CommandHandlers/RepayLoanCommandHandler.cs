@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using LoansManager.DAL.Repositories.Interfaces;
 using LoansManager.Services.Commands;
 using LoansManager.Services.Infrastructure.CommandsSetup;
@@ -18,6 +19,7 @@ namespace LoansManager.Services.Implementations.CommandHandlers
         {
             var loan = await loansRepository.GetAsync(command.LoanId);
             loan.IsRepaid = true;
+            loan.RepaidDate = DateTime.UtcNow;
             await loansRepository.UpdateAysnc(loan);
         }
     }
