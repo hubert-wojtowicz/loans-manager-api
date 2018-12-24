@@ -7,5 +7,6 @@ namespace LoansManager.DAL.Repositories.Interfaces
     public interface ILoansRepository
     {
         Task<LoanEntity> GetWithLenderAndBorrowerAync(Guid id);
+        Task AddAsync(LoanEntity loanEntity);
     }
 }

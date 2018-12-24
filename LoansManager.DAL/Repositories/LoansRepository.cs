@@ -24,5 +24,11 @@ namespace LoansManager.DAL.Repositories
                 .Include(x => x.Lender)
                 .Include(x => x.Borrower)
                 .SingleOrDefaultAsync(x => x.Id == id);
+
+        public async Task AddAsync(LoanEntity loan)
+        {
+            await context.Set<LoanEntity>().AddAsync(loan);
+            context.SaveChanges();
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace LoansManager.Services.Implementations.CommandHandlers
             this.userRepository = userRepository;
         }
 
-        public async Task HandleAsync(RegisterUserCommand command)
+        public Task HandleAsync(RegisterUserCommand command)
         {
             var salt = encypterService.GetSalt(command.Password);
             var passwordHash = encypterService.GetHash(command.Password, salt);
@@ -33,7 +33,7 @@ namespace LoansManager.Services.Implementations.CommandHandlers
             user.Salt = salt;
             user.Password = passwordHash;
 
-            await userRepository.AddAsync(user);
+            return userRepository.AddAsync(user);
         }
     }
 }

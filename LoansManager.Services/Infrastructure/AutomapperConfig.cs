@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LoansManager.CommandHandlers.Commands;
 using LoansManager.Domain;
+using LoansManager.Services.Commands;
 using LoansManager.Services.Dtos;
 
 namespace LoansManager.Services.Infrastructure
@@ -15,6 +16,7 @@ namespace LoansManager.Services.Infrastructure
                 cfg.CreateMap<LoanEntity, ViewLoanDto>()
                     .ForMember(x => x.LenderName, y => y.MapFrom(z => z.Lender.UserName))
                     .ForMember(x => x.BorrowerName, y => y.MapFrom(z => z.Borrower.UserName));
+                cfg.CreateMap<CreateLoanCommand, LoanEntity>();
             })
             .CreateMapper();
     }

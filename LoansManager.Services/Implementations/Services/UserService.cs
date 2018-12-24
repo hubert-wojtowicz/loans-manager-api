@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using LoansManager.DAL.Repositories.Interfaces;
@@ -40,5 +41,8 @@ namespace LoansManager.Services.Implementations.Services
             var user = await userRepository.GetByUserName(userName);
             return mapper.Map<ViewUserDto>(user);
         }
+
+        public async Task<bool> UserDoesNotExist(string userName, CancellationToken token)
+            => await userRepository.GetByUserName(userName) == null ? true : false;
     }
 }

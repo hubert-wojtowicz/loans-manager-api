@@ -23,7 +23,6 @@ namespace LoansManager.Services.Implementations.Services
         public async Task<ViewLoanDto> GetAsync(Guid id)
         {
             var loansWithRelatedUsers = await loansRepository.GetWithLenderAndBorrowerAync(id);
-            // nullcheck?
             return mapper.Map<ViewLoanDto>(loansWithRelatedUsers);
         }
     }

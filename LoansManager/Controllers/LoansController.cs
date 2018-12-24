@@ -1,4 +1,5 @@
 ﻿using LoansManager.Resources;
+using LoansManager.Services.Commands;
 using LoansManager.Services.Infrastructure.CommandsSetup;
 using LoansManager.Services.ServicesContracts;
 using Microsoft.AspNetCore.Mvc;
@@ -31,8 +32,21 @@ namespace LoansManager.Controllers
 
             if (loan == null)
                 return BadRequest(ValidationResultFactory(nameof(id), id, LoansControllerResources.LoanDoesNotExist, id.ToString()));
-            
+
             return Ok(loan);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAsync(CreateLoanCommand createLoanCommand)
+        {
+            var validationResult = await commandBus.Validate(createLoanCommand);
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult);
+
+            createLoanCommand.Id = Guid.NewGuid();
+            await commandBus.Submit(createLoanCommand);
+
+            return Created($"users/{createLoanCommand.Id}", createLoanCommand);
         }
     }
 }
