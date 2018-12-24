@@ -1,8 +1,10 @@
 ﻿using LoansManager.DAL.Repositories.Interfaces;
 using LoansManager.Domain;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace LoansManager.DAL.Repositories
@@ -35,5 +37,11 @@ namespace LoansManager.DAL.Repositories
             await context.Set<UserEntity>().AddAsync(user);
             context.SaveChanges();
         }
+
+        public Task<List<UserEntity>> GetFiltered(Expression<Func<UserEntity, bool>> predicate, int offset, int take)
+            => context.Users.Where(predicate)
+                      .Skip(offset)
+                      .Take(take)
+                      .ToListAsync();
     }
 }

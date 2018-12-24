@@ -1,5 +1,7 @@
 ﻿using LoansManager.Domain;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace LoansManager.DAL.Repositories.Interfaces
@@ -9,5 +11,6 @@ namespace LoansManager.DAL.Repositories.Interfaces
         Task<List<UserEntity>> GetLimitedAsync(int offset, int take);
         Task<UserEntity> GetByUserName(string userName);
         Task AddAsync(UserEntity user);
+        Task<List<UserEntity>> GetFiltered(Expression<Func<UserEntity, bool>> predicate, int offset, int take);
     }
 }
