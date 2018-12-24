@@ -2,18 +2,27 @@
 ## Overwiev:
 Get and save information about change money loans.
 
-## API use cases:
-* Listing all borrower,
-* Listing all lender,
-* Listing all loans in context of specified user,
-* Adding new user,
-* Adding new loan,
-* Repaying the loan.
+## API endpoints:
+### Basic
+* Listing all borrower `~/loans/getBorrowersLimited` GET,
+* Listing all lender `~/loans/getLendersLimited` GET,
+* Listing all loans in context of specified user `~/loans/getUsersLoansLimited/{userId}` GET,
+* Adding new user  `~/users/register` POST,
+* Adding new loan `~/loans` POST,
+* Repaying the loan `~/loans/repay` POST.
 
-## Additional:
+### Additional
+* Get loan by its key `~/loans/get/{id}` GET,
+* Get user by its key `~/users/get/{userName}` GET,
+* List all users `~/users/getLimited` GET,
+* Get token for specified user `~/users/auth` POST.
+
+## Other stuff:
 * HTTPS enabled and HTTP redirect to HTTPS,
 * JWT token authorization implemented,
-* authentication implemented to keep all borrower and lender safe.
+* authentication implemented to keep all borrower and lender safe,
+* endpoints where collections are returned are secured with records limit to not allow for overload server,
+* All comunicates are keep within designed Resources classes to easily localize api in the future.
 
 ## Technical overview:
 * ASP .NET Core Web API 2.2,
