@@ -38,7 +38,17 @@ namespace LoansManager.DAL.Repositories
         public async Task AddAsync(LoanEntity loan)
         {
             await context.Set<LoanEntity>().AddAsync(loan);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+        }
+
+        public Task<LoanEntity> GetAsync(Guid id)
+            => Get()
+                .SingleOrDefaultAsync(x => x.Id == id);
+
+        public Task UpdateAysnc(LoanEntity loan)
+        {
+            context.Loans.Update(loan);
+            return context.SaveChangesAsync();
         }
     }
 }

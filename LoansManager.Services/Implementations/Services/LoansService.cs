@@ -32,5 +32,8 @@ namespace LoansManager.Services.Implementations.Services
             var loans = await loansRepository.GetLimitedWithLenderAndBorrowerAsync(offset, take);
             return mapper.Map<IEnumerable<ViewLoanDto>>(loans);
         }
+
+        public async Task<bool> LoanExist(Guid loanId)
+            => await loansRepository.GetAsync(loanId) == null ? false : true;
     }
 }

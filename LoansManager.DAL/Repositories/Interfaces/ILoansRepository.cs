@@ -10,5 +10,7 @@ namespace LoansManager.DAL.Repositories.Interfaces
         Task<List<LoanEntity>> GetLimitedWithLenderAndBorrowerAsync(int offset, int take);
         Task<LoanEntity> GetWithLenderAndBorrowerAync(Guid id);
         Task AddAsync(LoanEntity loanEntity);
+        Task<LoanEntity> GetAsync(Guid id);
+        Task UpdateAysnc(LoanEntity loan);
     }
 }

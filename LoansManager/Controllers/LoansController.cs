@@ -56,7 +56,7 @@ namespace LoansManager.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(CreateLoanCommand createLoanCommand)
+        public async Task<IActionResult> CreateAsync([FromBody]CreateLoanCommand createLoanCommand)
         {
             var validationResult = await commandBus.Validate(createLoanCommand);
             if (!validationResult.IsValid)
@@ -66,6 +66,18 @@ namespace LoansManager.Controllers
             await commandBus.Submit(createLoanCommand);
 
             return Created($"users/{createLoanCommand.Id}", createLoanCommand);
+        }
+
+        [HttpPost]
+        [Route("repay")]
+        public async Task<IActionResult> RepayAsync([FromBody]RepayLoanCommand repayLoanCommand)
+        {
+            var validationResult = await commandBus.Validate(repayLoanCommand);
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult);
+            
+            await commandBus.Submit(repayLoanCommand);
+            return Accepted(repayLoanCommand);
         }
     }
 }
