@@ -43,10 +43,11 @@ namespace LoansManager.Controllers
         public async Task<IActionResult> GetAsync(string userName)
         {
             var user = string.IsNullOrWhiteSpace(userName) ? null : await userService.GetAsync(userName);
-            if (user == null)
-                return BadRequest(ValidationResultFactory(nameof(ViewUserDto.UserName), userName, UserControllerResources.NoUserExists, userName));
 
-            return Ok(user);
+            if (user != null)
+                return Ok(user);
+
+            return NotFound(userName);
         }
 
         [HttpGet]

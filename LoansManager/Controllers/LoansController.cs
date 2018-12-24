@@ -35,10 +35,10 @@ namespace LoansManager.Controllers
         {
             var loan = await loansService.GetAsync(id);
 
-            if (loan == null)
-                return BadRequest(ValidationResultFactory(nameof(id), id, LoansControllerResources.LoanDoesNotExist, id.ToString()));
+            if (loan != null)
+                return Ok(loan);
 
-            return Ok(loan);
+            return NotFound(id);
         }
 
         [HttpGet]
