@@ -15,7 +15,7 @@ namespace LoansManager.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : LoansBaseController
+    public class UsersController : ApplicationBaseController
     {
         private readonly ApiSettings apiSettings;
         private readonly IMapper mapper;

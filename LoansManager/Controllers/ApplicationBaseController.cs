@@ -1,9 +1,10 @@
-﻿using FluentValidation.Results;
+﻿
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LoansManager.Controllers
 {
-    public class LoansBaseController : ControllerBase
+    public class ApplicationBaseController : ControllerBase
     {
         protected ValidationResult ValidationResultFactory(string propertyName, object attemptedValue, string errorMessageTemplate, params string[] templateParams)
         {

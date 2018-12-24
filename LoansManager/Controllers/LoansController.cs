@@ -9,7 +9,7 @@ namespace LoansManager.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoansController : LoansBaseController
+    public class LoansController : ApplicationBaseController
     {
         private readonly ICommandBus commandBus;
         private readonly ILoansService loansService;
