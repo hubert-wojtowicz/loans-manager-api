@@ -2,7 +2,7 @@
 ## Overwiev:
 Get and save information about users change money loans.
 
-## Main functionalities
+## Main functionalities:
 Registering new user, getting token for user, creating loan, repaying loan, getting loan details, getting user details, listing users, listing borrowers, listing lenders, listing loans that belongs to user.
 
 ## API endpoints documentation:
