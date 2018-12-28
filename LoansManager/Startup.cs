@@ -16,6 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace LoansManager
@@ -44,6 +46,19 @@ namespace LoansManager
                             Title = Configuration["Api:Title"],
                             Version = Configuration["Api:Version"],
                             Description = Configuration["Api:Description"]
+                        });
+
+                    opt.AddSecurityDefinition(
+                        "Bearer", 
+                        new ApiKeyScheme
+                        {
+                            In = "header", Description = "Please enter JWT with Bearer into field", Name = "Authorization", Type = "apiKey"
+                        });
+
+                    opt.AddSecurityRequirement(
+                        new Dictionary<string, IEnumerable<string>>
+                        {
+                            { "Bearer", Enumerable.Empty<string>() },
                         });
                 })
                 .AddMvc(opt =>
