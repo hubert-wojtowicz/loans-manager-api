@@ -29,8 +29,17 @@ namespace LoansManager.Controllers
             this.apiSettings = apiSettings;
         }
 
+        /// <summary>
+        /// Gets loan by its <paramref name="id"/> key.
+        /// </summary>
+        /// <param name="id">Key of concrete loan.</param>
+        /// <returns>Loan object.</returns>
+        /// <response code="200">Returns loan by its key.</response>
+        /// <response code="404">If no loan found for specified key.</response> 
         [HttpGet]
         [Route("get/{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             var loan = await loansService.GetAsync(id);
