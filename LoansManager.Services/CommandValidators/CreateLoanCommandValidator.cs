@@ -30,11 +30,11 @@ namespace LoansManager.Services.CommandValidators
                 .WithMessage(CreateLoanCommandValidatorResource.BorrowerAndLenderMustDiffer);
 
             RuleFor(x => x.LenderId)
-                .MustAsync(userService.UserDoesNotExist)
+                .MustAsync(userService.UserExist)
                 .WithMessage(CreateLoanCommandValidatorResource.LenderDoesNotExtist);
 
             RuleFor(x => x.BorrowerId)
-                .MustAsync(userService.UserDoesNotExist)
+                .MustAsync(userService.UserExist)
                 .WithMessage(CreateLoanCommandValidatorResource.BorrowerDoesNotExist);
         }
     }
