@@ -112,10 +112,8 @@ namespace LoansManager.Controllers
             var validationResult = await commandBus.Validate(createLoanCommand);
             if (!validationResult.IsValid)
                 return BadRequest(validationResult);
-
-            createLoanCommand.Id = Guid.NewGuid();
+            
             await commandBus.Submit(createLoanCommand);
-
             return Created($"users/{createLoanCommand.Id}", createLoanCommand);
         }
 
