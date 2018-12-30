@@ -1,21 +1,13 @@
 # Loans Manager REST API
 ## Overwiev:
-Get and save information about change money loans.
+Get and save information about users change money loans.
 
-## API endpoints:
-### Basic
-* Listing all borrower `~/api/loans/getBorrowersLimited` GET,
-* listing all lender `~/api/loans/getLendersLimited` GET,
-* listing all loans in context of specified user `~/api/loans/getUsersLoansLimited/{userId}` GET,
-* adding new user  `~/api/users/register` POST,
-* adding new loan `~/api/loans` POST,
-* repaying the loan `~/api/loans/repay` POST.
+## Main functionalities:
+Registering new user, getting token for user, creating loan, repaying loan, getting loan details, getting user details, listing users, listing borrowers, listing lenders, listing loans that belongs to user.
 
-### Additional
-* Get loan by its key `~/api/loans/get/{id}` GET,
-* get user by its key `~/api/users/get/{userName}` GET,
-* list all users `~/api/users/getLimited` GET,
-* get token for specified user `~/api/users/auth` POST.
+## API endpoints documentation:
+* UI swagger doc of the API can be reached at `~/swagger`,
+* JSON swagger doc of the API can be reach at address: `~/swagger/LoansApiV1/swagger.json`.
 
 ## Other stuff:
 * HTTPS enabled and HTTP redirect to HTTPS,
@@ -23,10 +15,6 @@ Get and save information about change money loans.
 * authentication implemented to keep all borrower and lender safe,
 * endpoints where collections are returned are secured with records limit to not allow for overload server,
 * all comunicates are keep within designed Resources classes to easily localize api in the future.
-
-## Technical overview:
-* ASP .NET Core Web API 2.2,
-* MS-SQL, EF Code First approach.
 
 ## Repo:
 The type of commit is contained within the title and can be one of these types:
@@ -38,3 +26,7 @@ The type of commit is contained within the title and can be one of these types:
 * Refactor: refactoring production code,
 * Test: adding tests, refactoring test; no production code change,
 * Config: changing of configurations.
+
+## Technical overview:
+* ASP .NET Core Web API 2.2,
+* MS-SQL, EF Core, Code First approach.

@@ -42,7 +42,10 @@ namespace LoansManager.Services.Implementations.Services
             return mapper.Map<ViewUserDto>(user);
         }
 
+        public async Task<bool> UserExist(string userName, CancellationToken token)
+        => await userRepository.GetByUserName(userName) != null ? true : false;
+
         public async Task<bool> UserDoesNotExist(string userName, CancellationToken token)
-            => await userRepository.GetByUserName(userName) == null ? true : false;
+        => !(await UserExist(userName, token));
     }
 }

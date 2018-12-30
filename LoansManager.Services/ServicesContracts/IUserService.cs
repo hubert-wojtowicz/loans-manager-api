@@ -10,6 +10,7 @@ namespace LoansManager.Services.ServicesContracts
         Task<IEnumerable<ViewUserDto>> GetAsync(int offset = 0, int take = 15);
         Task<bool> AuthenticateUserAsync(AuthenticateUserDto credentials);
         Task<ViewUserDto> GetAsync(string userName);
+        Task<bool> UserExist(string userName, CancellationToken token);
         Task<bool> UserDoesNotExist(string userName, CancellationToken token);
     }
 }
