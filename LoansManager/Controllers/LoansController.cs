@@ -37,7 +37,7 @@ namespace LoansManager.Controllers
         /// <response code="200">When loan found.</response>
         /// <response code="404">When no loan found.</response> 
         [HttpGet]
-        [Route("get/{id}")]
+        [Route("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetAsync(Guid id)
@@ -60,7 +60,6 @@ namespace LoansManager.Controllers
         /// <response code="400">When to many records requested.</response> 
         /// <response code="404">When no records found.</response> 
         [HttpGet]
-        [Route("getLimited")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -86,7 +85,7 @@ namespace LoansManager.Controllers
         /// <response code="400">When to many records requested.</response> 
         /// <response code="404">When no records found.</response> 
         [HttpGet]
-        [Route("getBorrowersLimited")]
+        [Route("Borrowers")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -112,7 +111,7 @@ namespace LoansManager.Controllers
         /// <response code="400">When to many records requested.</response> 
         /// <response code="404">When no records found.</response> 
         [HttpGet]
-        [Route("getLendersLimited")]
+        [Route("Lenders")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -129,7 +128,7 @@ namespace LoansManager.Controllers
         }
 
         /// <summary>
-        /// Gets collection of loans to return by specified user.
+        /// Gets collection of loans to pay off by specified user.
         /// </summary>
         /// <param name="userId">User who borrowed cash.</param>
         /// <param name="offset">Offset from first record.</param>
@@ -139,7 +138,7 @@ namespace LoansManager.Controllers
         /// <response code="400">When to many records requested.</response> 
         /// <response code="404">When no records found.</response> 
         [HttpGet]
-        [Route("getUsersLoansLimited/{userId}")]
+        [Route("{userId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -180,8 +179,8 @@ namespace LoansManager.Controllers
         /// <param name="repayLoanCommand">Loan model.</param>
         /// <response code="202">When accepted loan repaid.</response>
         /// <response code="400">When validation on <paramref name="repayLoanCommand"/> failed.</response>
-        [HttpPost]
-        [Route("repay")]
+        [HttpPatch]
+        [Route("Repay")]
         [ProducesResponseType(202)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> RepayAsync([FromBody]RepayLoanCommand repayLoanCommand)

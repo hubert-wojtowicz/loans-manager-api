@@ -46,7 +46,7 @@ namespace LoansManager.Controllers
         /// <response code="200">When record found.</response>
         /// <response code="404">When no record found.</response> 
         [HttpGet]
-        [Route("get/{userName}")]
+        [Route("{userName}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetAsync(string userName)
@@ -69,7 +69,6 @@ namespace LoansManager.Controllers
         /// <response code="400">When to many records requested.</response> 
         /// <response code="404">When no records found.</response> 
         [HttpGet]
-        [Route("getLimited")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -92,7 +91,7 @@ namespace LoansManager.Controllers
         /// <response code="201">When record created.</response> 
         /// <response code="404">When validation of <paramref name="createUserDto"/> failed.</response> 
         [HttpPost]
-        [Route("register")]
+        [Route("Register")]
         [AllowAnonymous]
         [ProducesResponseType(201)]
         [ProducesResponseType(404)]
@@ -113,7 +112,7 @@ namespace LoansManager.Controllers
         /// <response code="200">When token generated.</response> 
         /// <response code="404">When authentication failed.</response> 
         [HttpPost]
-        [Route("auth")]
+        [Route("Auth")]
         [AllowAnonymous]
         public async Task<IActionResult> AuthenticateAsync([FromBody]AuthenticateUserDto credentials)
         {
