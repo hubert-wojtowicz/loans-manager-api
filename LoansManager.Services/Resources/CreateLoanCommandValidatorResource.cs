@@ -1,6 +1,6 @@
 ﻿namespace LoansManager.Services.Resources
 {
-    public class CreateLoanCommandValidatorResource
+    public static class CreateLoanCommandValidatorResource
     {
         public const string LenderNotNullOrEmpty = "Lender must be defined.";
         public const string BorrowerNotNullOrEmpty = "Borrower must be defined.";

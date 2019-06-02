@@ -8,13 +8,9 @@ namespace LoansManager.Services.CommandValidators
 {
     public class CreateLoanCommandValidator : AbstractValidator<CreateLoanCommand>
     {
-        private readonly IUserService userService;
-
         public CreateLoanCommandValidator(
             IUserService userService)
         {
-            this.userService = userService;
-            
             RuleFor(x => x.LenderId)
                 .NotNull()
                 .NotEmpty()

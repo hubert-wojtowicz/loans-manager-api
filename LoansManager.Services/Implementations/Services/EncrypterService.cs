@@ -7,8 +7,8 @@ namespace LoansManager.Services.Implementations.Services
 {
     public class EncrypterService : IEncypterService
     {
-        private static readonly int DeriveBytesIterationsCount = 10000;
-        private static readonly int SaltSize = 40;
+        private const int DeriveBytesIterationsCount = 10000;
+        private const int SaltSize = 40;
 
         public string GetSalt(string value)
         {
@@ -17,7 +17,6 @@ namespace LoansManager.Services.Implementations.Services
                 throw new ArgumentException("Can not generate salt from an empty value.", nameof(value));
             }
 
-            var random = new Random();
             var saltBytes = new byte[SaltSize];
             var rng = RandomNumberGenerator.Create();
             rng.GetBytes(saltBytes);

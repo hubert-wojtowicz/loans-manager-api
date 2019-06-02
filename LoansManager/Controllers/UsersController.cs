@@ -28,8 +28,7 @@ namespace LoansManager.Controllers
             IMapper mapper,
             IJwtService jwtService,
             IUserService userService,
-            ICommandBus commandBus
-            )
+            ICommandBus commandBus)
         {
             this.apiSettings = apiSettings;
             this.mapper = mapper;
@@ -44,7 +43,7 @@ namespace LoansManager.Controllers
         /// <param name="userName">Key of concrete user.</param>
         /// <returns>User object.</returns>
         /// <response code="200">When record found.</response>
-        /// <response code="404">When no record found.</response> 
+        /// <response code="404">When no record found.</response>
         [HttpGet]
         [Route("{userName}")]
         [ProducesResponseType(200)]
@@ -54,7 +53,9 @@ namespace LoansManager.Controllers
             var user = string.IsNullOrWhiteSpace(userName) ? null : await userService.GetAsync(userName);
 
             if (user != null)
+            {
                 return Ok(user);
+            }
 
             return NotFound(userName);
         }
@@ -66,8 +67,8 @@ namespace LoansManager.Controllers
         /// <param name="take">Amount of records to take.</param>
         /// <returns>Collection of users objects.</returns>
         /// <response code="200">When at least one record found.</response>
-        /// <response code="400">When to many records requested.</response> 
-        /// <response code="404">When no records found.</response> 
+        /// <response code="400">When to many records requested.</response>
+        /// <response code="404">When no records found.</response>
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -75,11 +76,15 @@ namespace LoansManager.Controllers
         public async Task<IActionResult> GetAsync([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
         {
             if (take > apiSettings.MaxNumberOfRecordToGet)
+            {
                 return BadRequest(ValidationResultFactory(nameof(take), take, UserControllerResources.MaxNumberOfRecordToGetExceeded, apiSettings.MaxNumberOfRecordToGet.ToString()));
+            }
 
             var users = await userService.GetAsync(offset, take);
             if (users.Any())
+            {
                 return Ok(users);
+            }
 
             return NotFound();
         }
@@ -88,8 +93,8 @@ namespace LoansManager.Controllers
         /// Adds new user.
         /// </summary>
         /// <param name="createUserDto">Creation of user model.</param>
-        /// <response code="201">When record created.</response> 
-        /// <response code="404">When validation of <paramref name="createUserDto"/> failed.</response> 
+        /// <response code="201">When record created.</response>
+        /// <response code="404">When validation of <paramref name="createUserDto"/> failed.</response>
         [HttpPost]
         [Route("Register")]
         [AllowAnonymous]
@@ -99,7 +104,9 @@ namespace LoansManager.Controllers
         {
             var validationResult = await commandBus.Validate(createUserDto);
             if (!validationResult.IsValid)
+            {
                 return BadRequest(validationResult);
+            }
 
             await commandBus.Submit(createUserDto);
             return Created($"users/{createUserDto.UserName}", mapper.Map<ViewUserDto>(createUserDto));
@@ -109,15 +116,17 @@ namespace LoansManager.Controllers
         /// Generates JWT token for user.
         /// </summary>
         /// <param name="credentials">Credentials model.</param>
-        /// <response code="200">When token generated.</response> 
-        /// <response code="404">When authentication failed.</response> 
+        /// <response code="200">When token generated.</response>
+        /// <response code="404">When authentication failed.</response>
         [HttpPost]
         [Route("Auth")]
         [AllowAnonymous]
         public async Task<IActionResult> AuthenticateAsync([FromBody]AuthenticateUserDto credentials)
         {
             if (await userService.AuthenticateUserAsync(credentials))
+            {
                 return Ok(jwtService.GenerateToken(credentials.UserName, Roles.Admin));
+            }
 
             return BadRequest(ValidationResultFactory(nameof(credentials), credentials, UserControllerResources.AuthenticationFailed));
         }

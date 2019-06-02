@@ -1,0 +1,8 @@
+<RuleSet Name="StyleCopRules" Description="These rules configure StyleCop." ToolsVersion="1.0">
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA1101" Action="None" />
+	<Rule Id="SA1633" Action="None" />
+	<Rule Id="SA1600" Action="None" />
+	<Rule Id="SA1615" Action="None" />
+  </Rules>
+</RuleSet>

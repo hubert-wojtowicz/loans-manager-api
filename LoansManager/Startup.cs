@@ -1,4 +1,10 @@
-﻿using Autofac;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using LoansManager.DAL;
 using LoansManager.Services.Infrastructure;
@@ -15,12 +21,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 
 namespace LoansManager
 {
@@ -31,9 +31,9 @@ namespace LoansManager
             Configuration = configuration;
         }
 
-        private static IContainer AutofacContainer { get; set; }
-
         public IConfiguration Configuration { get; }
+
+        private static IContainer AutofacContainer { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the Description.
         public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -42,19 +42,19 @@ namespace LoansManager
                 .AddSwaggerGen(opt =>
                 {
                     opt.SwaggerDoc(
-                        Configuration["Api:Name"], 
+                        Configuration["Api:Name"],
                         new Info
                         {
                             Title = Configuration["Api:Title"],
                             Version = Configuration["Api:Version"],
-                            Description = Configuration["Api:Description"]
+                            Description = Configuration["Api:Description"],
                         });
 
                     opt.AddSecurityDefinition(
-                        "Bearer", 
+                        "Bearer",
                         new ApiKeyScheme
                         {
-                            In = "header", Description = "Please enter JWT with Bearer into field", Name = "Authorization", Type = "apiKey"
+                            In = "header", Description = "Please enter JWT with Bearer into field", Name = "Authorization", Type = "apiKey",
                         });
 
                     opt.AddSecurityRequirement(

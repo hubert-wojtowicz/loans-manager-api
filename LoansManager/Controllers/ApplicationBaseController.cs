@@ -1,15 +1,16 @@
-﻿
-using FluentValidation.Results;
+﻿using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LoansManager.Controllers
 {
     public class ApplicationBaseController : ControllerBase
     {
-        protected ValidationResult ValidationResultFactory(string propertyName, object attemptedValue, string errorMessageTemplate, params string[] templateParams)
+        protected static ValidationResult ValidationResultFactory(string propertyName, object attemptedValue, string errorMessageTemplate, params string[] templateParams)
         {
-            var failure = new ValidationFailure(propertyName, string.Format(errorMessageTemplate, templateParams));
-            failure.AttemptedValue = attemptedValue;
+            var failure = new ValidationFailure(propertyName, string.Format(errorMessageTemplate, templateParams))
+            {
+                AttemptedValue = attemptedValue,
+            };
             return new ValidationResult(new[] { failure });
         }
     }

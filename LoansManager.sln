@@ -1,21 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2003
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoansManager", "LoansManager\LoansManager.csproj", "{1FB31B96-C784-4B35-90A8-5B4251AFD6F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoansManager", "LoansManager\LoansManager.csproj", "{1FB31B96-C784-4B35-90A8-5B4251AFD6F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoansManager.DAL", "LoansManager.DAL\LoansManager.DAL.csproj", "{99B793A3-31EA-4462-BD86-491ABD996E98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoansManager.DAL", "LoansManager.DAL\LoansManager.DAL.csproj", "{99B793A3-31EA-4462-BD86-491ABD996E98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoansManager.Services", "LoansManager.Services\LoansManager.Services.csproj", "{F4B2989D-DFF0-4FA5-B066-A45547C21819}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoansManager.Services", "LoansManager.Services\LoansManager.Services.csproj", "{F4B2989D-DFF0-4FA5-B066-A45547C21819}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoansManager.UnitTest", "LoansManager.UnitTest\LoansManager.UnitTest.csproj", "{EDEF87ED-6867-4540-BE3A-281F9AB16E39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoansManager.UnitTest", "LoansManager.UnitTest\LoansManager.UnitTest.csproj", "{EDEF87ED-6867-4540-BE3A-281F9AB16E39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoansManager.E2ETest", "LoansManager.E2ETest\LoansManager.E2ETest.csproj", "{81BB593E-E291-4CF1-98A9-7A11927973CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoansManager.E2ETest", "LoansManager.E2ETest\LoansManager.E2ETest.csproj", "{81BB593E-E291-4CF1-98A9-7A11927973CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoansManager.Domain", "LoansManager.Domain\LoansManager.Domain.csproj", "{CB7F628C-926C-45CB-B500-3645A96D2590}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoansManager.Domain", "LoansManager.Domain\LoansManager.Domain.csproj", "{CB7F628C-926C-45CB-B500-3645A96D2590}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoansManager.Util", "LoansManager.Util\LoansManager.Util.csproj", "{D9D3AF93-D8EA-47B4-8E96-E1464713E7F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoansManager.Util", "LoansManager.Util\LoansManager.Util.csproj", "{D9D3AF93-D8EA-47B4-8E96-E1464713E7F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

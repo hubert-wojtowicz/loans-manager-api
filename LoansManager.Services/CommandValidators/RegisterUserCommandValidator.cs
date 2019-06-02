@@ -12,12 +12,8 @@ namespace LoansManager.Services.CommandValidators
 {
     public class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
     {
-        private readonly IUserService userService;
-
         public RegisterUserCommandValidator(IUserService userService, ApiSettings apiSettings)
         {
-            this.userService = userService;
-
             RuleFor(x => x.Password)
                 .Must(x => Regex.IsMatch(x, apiSettings.UserPasswordPattern))
                 .WithMessage(RegisterUserCommandValidatorResource.PasswortInvalid);

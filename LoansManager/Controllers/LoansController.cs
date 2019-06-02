@@ -1,12 +1,12 @@
-﻿using LoansManager.Resources;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using LoansManager.Resources;
 using LoansManager.Services.Commands;
 using LoansManager.Services.Infrastructure.CommandsSetup;
 using LoansManager.Services.Infrastructure.SettingsModels;
 using LoansManager.Services.ServicesContracts;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LoansManager.Controllers
 {
@@ -21,8 +21,7 @@ namespace LoansManager.Controllers
         public LoansController(
             ICommandBus commandBus,
             ILoansService loansService,
-            ApiSettings apiSettings
-            )
+            ApiSettings apiSettings)
         {
             this.commandBus = commandBus;
             this.loansService = loansService;
@@ -35,7 +34,7 @@ namespace LoansManager.Controllers
         /// <param name="id">Key of concrete loan.</param>
         /// <returns>Loan object.</returns>
         /// <response code="200">When loan found.</response>
-        /// <response code="404">When no loan found.</response> 
+        /// <response code="404">When no loan found.</response>
         [HttpGet]
         [Route("{id}")]
         [ProducesResponseType(200)]
@@ -45,7 +44,9 @@ namespace LoansManager.Controllers
             var loan = await loansService.GetAsync(id);
 
             if (loan != null)
+            {
                 return Ok(loan);
+            }
 
             return NotFound(id);
         }
@@ -57,8 +58,8 @@ namespace LoansManager.Controllers
         /// <param name="take">Amount of records to take.</param>
         /// <returns>Collection of loans objects.</returns>
         /// <response code="200">When at least one record found.</response>
-        /// <response code="400">When to many records requested.</response> 
-        /// <response code="404">When no records found.</response> 
+        /// <response code="400">When to many records requested.</response>
+        /// <response code="404">When no records found.</response>
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -66,11 +67,15 @@ namespace LoansManager.Controllers
         public async Task<IActionResult> GetAsync([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
         {
             if (take > apiSettings.MaxNumberOfRecordToGet)
+            {
                 return BadRequest(ValidationResultFactory(nameof(take), take, UserControllerResources.MaxNumberOfRecordToGetExceeded, apiSettings.MaxNumberOfRecordToGet.ToString()));
+            }
 
             var loans = await loansService.GetAsync(offset, take);
             if (loans.Any())
+            {
                 return Ok(loans);
+            }
 
             return NotFound();
         }
@@ -82,8 +87,8 @@ namespace LoansManager.Controllers
         /// <param name="take">Amount of records to take.</param>
         /// <returns>Collection of borrowers ids.</returns>
         /// <response code="200">When at least one record found.</response>
-        /// <response code="400">When to many records requested.</response> 
-        /// <response code="404">When no records found.</response> 
+        /// <response code="400">When to many records requested.</response>
+        /// <response code="404">When no records found.</response>
         [HttpGet]
         [Route("Borrowers")]
         [ProducesResponseType(200)]
@@ -92,11 +97,15 @@ namespace LoansManager.Controllers
         public async Task<IActionResult> GetBorrowersAsync([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
         {
             if (take > apiSettings.MaxNumberOfRecordToGet)
+            {
                 return BadRequest(ValidationResultFactory(nameof(take), take, UserControllerResources.MaxNumberOfRecordToGetExceeded, apiSettings.MaxNumberOfRecordToGet.ToString()));
+            }
 
             var users = await loansService.GetBorrowersAsync(offset, take);
             if (users.Any())
+            {
                 return Ok(users);
+            }
 
             return NotFound();
         }
@@ -108,8 +117,8 @@ namespace LoansManager.Controllers
         /// <param name="take">Amount of records to take.</param>
         /// <returns>Collection of lenders ids.</returns>
         /// <response code="200">When at least one record found.</response>
-        /// <response code="400">When to many records requested.</response> 
-        /// <response code="404">When no records found.</response> 
+        /// <response code="400">When to many records requested.</response>
+        /// <response code="404">When no records found.</response>
         [HttpGet]
         [Route("Lenders")]
         [ProducesResponseType(200)]
@@ -118,11 +127,15 @@ namespace LoansManager.Controllers
         public async Task<IActionResult> GetLendersAsync([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
         {
             if (take > apiSettings.MaxNumberOfRecordToGet)
+            {
                 return BadRequest(ValidationResultFactory(nameof(take), take, UserControllerResources.MaxNumberOfRecordToGetExceeded, apiSettings.MaxNumberOfRecordToGet.ToString()));
+            }
 
             var users = await loansService.GetLendersAsync(offset, take);
             if (users.Any())
+            {
                 return Ok(users);
+            }
 
             return NotFound();
         }
@@ -135,8 +148,8 @@ namespace LoansManager.Controllers
         /// <param name="take">Amount of records to take.</param>
         /// <returns>Collection of loans.</returns>
         /// <response code="200">When at least one record found.</response>
-        /// <response code="400">When to many records requested.</response> 
-        /// <response code="404">When no records found.</response> 
+        /// <response code="400">When to many records requested.</response>
+        /// <response code="404">When no records found.</response>
         [HttpGet]
         [Route("{userId}")]
         [ProducesResponseType(200)]
@@ -145,11 +158,15 @@ namespace LoansManager.Controllers
         public async Task<IActionResult> GetUserLoansAsync(string userId, [FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
         {
             if (take > apiSettings.MaxNumberOfRecordToGet)
+            {
                 return BadRequest(ValidationResultFactory(nameof(take), take, UserControllerResources.MaxNumberOfRecordToGetExceeded, apiSettings.MaxNumberOfRecordToGet.ToString()));
+            }
 
             var loans = await loansService.GetUserLoansAsync(userId, offset, take);
             if (loans.Any())
+            {
                 return Ok(loans);
+            }
 
             return NotFound();
         }
@@ -167,8 +184,10 @@ namespace LoansManager.Controllers
         {
             var validationResult = await commandBus.Validate(createLoanCommand);
             if (!validationResult.IsValid)
+            {
                 return BadRequest(validationResult);
-            
+            }
+
             await commandBus.Submit(createLoanCommand);
             return Created($"users/{createLoanCommand.Id}", createLoanCommand);
         }
@@ -187,8 +206,10 @@ namespace LoansManager.Controllers
         {
             var validationResult = await commandBus.Validate(repayLoanCommand);
             if (!validationResult.IsValid)
+            {
                 return BadRequest(validationResult);
-            
+            }
+
             await commandBus.Submit(repayLoanCommand);
             return Accepted(repayLoanCommand);
         }
