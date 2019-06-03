@@ -1,0 +1,13 @@
+<Project>
+
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)loans.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
+
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory).stylecop.json" />
+  </ItemGroup>
+
+</Project>
