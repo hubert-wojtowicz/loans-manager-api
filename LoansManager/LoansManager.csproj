@@ -39,7 +39,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <CodeAnalysisRuleSet>StyleCop.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>loans.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
