@@ -1,5 +1,5 @@
-﻿using FluentValidation;
-using LoansManager.DAL.Repositories.Interfaces;
+﻿using System;
+using FluentValidation;
 using LoansManager.Services.Commands;
 using LoansManager.Services.Resources;
 using LoansManager.Services.ServicesContracts;
@@ -11,13 +11,16 @@ namespace LoansManager.Services.CommandValidators
         public CreateLoanCommandValidator(
             IUserService userService)
         {
+            if (userService == null)
+            {
+                throw new ArgumentNullException($"{nameof(userService)} can not be null.");
+            }
+
             RuleFor(x => x.LenderId)
-                .NotNull()
                 .NotEmpty()
                 .WithMessage(CreateLoanCommandValidatorResource.BorrowerNotNullOrEmpty);
 
             RuleFor(x => x.BorrowerId)
-                .NotNull()
                 .NotEmpty()
                 .WithMessage(CreateLoanCommandValidatorResource.BorrowerNotNullOrEmpty);
 

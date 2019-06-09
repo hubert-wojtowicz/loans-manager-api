@@ -4,6 +4,6 @@ namespace LoansManager.Services.ServicesContracts
 {
     public interface IJwtService
     {
-        JwtDto GenerateToken(string username, string role);
+        JwtDto GenerateToken(string userName, string role);
     }
 }

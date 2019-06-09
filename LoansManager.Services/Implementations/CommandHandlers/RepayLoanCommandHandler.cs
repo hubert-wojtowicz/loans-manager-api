@@ -15,7 +15,17 @@ namespace LoansManager.Services.Implementations.CommandHandlers
             this.loansRepository = loansRepository;
         }
 
-        public async Task HandleAsync(RepayLoanCommand command)
+        public Task HandleAsync(RepayLoanCommand command)
+        {
+            if (command == null)
+            {
+                throw new ArgumentNullException($"{nameof(command)} can not be null.");
+            }
+
+            return Repay(command);
+        }
+
+        private async Task Repay(RepayLoanCommand command)
         {
             var loan = await loansRepository.GetAsync(command.LoanId);
             loan.IsRepaid = true;

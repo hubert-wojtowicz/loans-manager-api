@@ -6,10 +6,14 @@ using System.Reflection;
 using System.Text;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using FluentValidation;
 using LoansManager.DAL;
+using LoansManager.Helper;
+using LoansManager.Services.Dtos;
 using LoansManager.Services.Infrastructure;
 using LoansManager.Services.Infrastructure.IoC;
 using LoansManager.Services.Infrastructure.IoC.Modules;
+using LoansManager.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -77,6 +81,9 @@ namespace LoansManager
                 }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services
+                .AddHttpContextAccessor()
+                .AddSingleton<IUriHelperService, UriHelperService>()
+                .AddScoped<AbstractValidator<AuthenticateUserDto>, AuthenticateUserDtoValidator>()
                 .AddSingleton(AutomapperConfig.Initialize())
                 .AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")))
                 .AddAuthentication(opt =>
@@ -130,7 +137,9 @@ namespace LoansManager
                    c.SwaggerEndpoint($"/swagger/{Configuration["Api:Name"]}/swagger.json", Configuration["Api:Name"]);
                });
 
+#pragma warning disable CA1062 // Validate arguments of public methods
             applicationLifetime.ApplicationStopped.Register(() => AutofacContainer.Dispose());
+#pragma warning restore CA1062 // Validate arguments of public methods
         }
     }
 }

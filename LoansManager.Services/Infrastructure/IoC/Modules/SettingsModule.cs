@@ -12,6 +12,7 @@ namespace LoansManager.Services.Infrastructure.IoC.Modules
         {
             this.configuration = configuration;
         }
+
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterInstance(configuration.GetSettings<JwtSettings>())

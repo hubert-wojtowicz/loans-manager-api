@@ -14,8 +14,7 @@ namespace LoansManager.Services.Implementations.CommandHandlers
 
         public CreateLoanCommandHandler(
             ILoansRepository loansRepository,
-            IMapper mapper
-            )
+            IMapper mapper)
         {
             this.loansRepository = loansRepository;
             this.mapper = mapper;

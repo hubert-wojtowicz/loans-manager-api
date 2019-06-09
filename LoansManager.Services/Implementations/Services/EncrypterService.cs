@@ -1,7 +1,7 @@
-﻿using LoansManager.Services.ServicesContracts;
-using LoansManager.Util;
-using System;
+﻿using System;
 using System.Security.Cryptography;
+using LoansManager.Services.ServicesContracts;
+using LoansManager.Util;
 
 namespace LoansManager.Services.Implementations.Services
 {
@@ -12,25 +12,28 @@ namespace LoansManager.Services.Implementations.Services
 
         public string GetSalt(string value)
         {
-            if (value.Empty())
+            if (string.IsNullOrEmpty(value))
             {
                 throw new ArgumentException("Can not generate salt from an empty value.", nameof(value));
             }
 
             var saltBytes = new byte[SaltSize];
-            var rng = RandomNumberGenerator.Create();
-            rng.GetBytes(saltBytes);
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(saltBytes);
+            }
 
             return Convert.ToBase64String(saltBytes);
         }
 
         public string GetHash(string value, string salt)
         {
-            if (value.Empty())
+            if (string.IsNullOrEmpty(value))
             {
                 throw new ArgumentException("Can not generate hash from an empty value.", nameof(value));
             }
-            if (salt.Empty())
+
+            if (string.IsNullOrEmpty(salt))
             {
                 throw new ArgumentException("Can not use an empty salt from hashing value.", nameof(value));
             }

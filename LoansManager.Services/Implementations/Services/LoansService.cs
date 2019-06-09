@@ -16,12 +16,12 @@ namespace LoansManager.Services.Implementations.Services
 
         public LoansService(
             IMapper mapper,
-            ILoansRepository loansRepository
-            )
+            ILoansRepository loansRepository)
         {
             this.mapper = mapper;
             this.loansRepository = loansRepository;
         }
+
         public async Task<ViewLoanDto> GetAsync(Guid id)
         {
             var loansWithRelatedUsers = await loansRepository.GetWithLenderAndBorrowerAync(id);
@@ -53,6 +53,6 @@ namespace LoansManager.Services.Implementations.Services
         }
 
         public async Task<bool> LoanExist(Guid loanId)
-            => await loansRepository.GetAsync(loanId) == null ? false : true;
+            => await loansRepository.GetAsync(loanId) == null;
     }
 }

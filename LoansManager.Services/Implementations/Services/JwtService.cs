@@ -1,12 +1,13 @@
-﻿using LoansManager.Services.Dtos;
+﻿using System;
+using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using LoansManager.Services.Dtos;
 using LoansManager.Services.Infrastructure.SettingsModels;
 using LoansManager.Services.ServicesContracts;
 using LoansManager.Util;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace LoansManager.Services.Implementations.Services
 {
@@ -28,12 +29,13 @@ namespace LoansManager.Services.Implementations.Services
                 new Claim(JwtRegisteredClaimNames.Sub, userName),
                 new Claim(JwtRegisteredClaimNames.UniqueName, userName),
                 new Claim(ClaimTypes.Role, role),
-                new Claim(JwtRegisteredClaimNames.Iat, now.ToTimestamp().ToString(), ClaimValueTypes.Integer64)
+                new Claim(JwtRegisteredClaimNames.Iat, now.ToTimestamp().ToString(CultureInfo.InvariantCulture), ClaimValueTypes.Integer64),
             };
 
             var expires = now.AddMinutes(_settings.ExpiryMinutes);
 
-            var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SecretKey)),
+            var signingCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SecretKey)),
                 SecurityAlgorithms.HmacSha256);
 
             var jwt = new JwtSecurityToken(
@@ -42,15 +44,14 @@ namespace LoansManager.Services.Implementations.Services
                 claims: claims,
                 notBefore: now,
                 expires: expires,
-                signingCredentials: signingCredentials
-            );
+                signingCredentials: signingCredentials);
 
             var token = new JwtSecurityTokenHandler().WriteToken(jwt);
 
             return new JwtDto
             {
                 Token = token,
-                Expires = expires.ToTimestamp()
+                Expires = expires.ToTimestamp(),
             };
         }
     }

@@ -1,11 +1,11 @@
-﻿using LoansManager.DAL.Repositories.Interfaces;
-using LoansManager.Domain;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using LoansManager.DAL.Repositories.Interfaces;
+using LoansManager.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace LoansManager.DAL.Repositories
 {
@@ -17,9 +17,6 @@ namespace LoansManager.DAL.Repositories
         {
             this.context = context;
         }
-
-        protected IQueryable<LoanEntity> Get()
-            => context.Set<LoanEntity>();
 
         public Task<List<LoanEntity>> GetLimitedWithLenderAndBorrowerAsync(int offset, int take)
             => Get()
@@ -36,9 +33,9 @@ namespace LoansManager.DAL.Repositories
                 .Include(x => x.Borrower)
                 .SingleOrDefaultAsync(x => x.Id == id);
 
-        public async Task AddAsync(LoanEntity loan)
+        public async Task AddAsync(LoanEntity loanEntity)
         {
-            await context.Set<LoanEntity>().AddAsync(loan);
+            await context.Set<LoanEntity>().AddAsync(loanEntity);
             await context.SaveChangesAsync();
         }
 
@@ -67,5 +64,8 @@ namespace LoansManager.DAL.Repositories
                 .Skip(offset)
                 .Take(take)
                 .ToListAsync();
+
+        protected IQueryable<LoanEntity> Get()
+            => context.Set<LoanEntity>();
     }
 }

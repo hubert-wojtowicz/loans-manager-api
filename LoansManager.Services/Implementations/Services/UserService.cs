@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -30,10 +31,14 @@ namespace LoansManager.Services.Implementations.Services
             return mapper.Map<IEnumerable<ViewUserDto>>(users);
         }
 
-        public async Task<bool> AuthenticateUserAsync(AuthenticateUserDto credentials)
+        public Task<bool> AuthenticateUserAsync(AuthenticateUserDto credentials)
         {
-            var user = await userRepository.GetByUserName(credentials.UserName);
-            return user != null && encypterService.GetHash(credentials.Password, user.Salt) == user.Password ? true : false;
+            if (credentials == null)
+            {
+                throw new ArgumentNullException($"{nameof(credentials)} can not be null.");
+            }
+
+            return AuthenticateUser(credentials);
         }
 
         public async Task<ViewUserDto> GetAsync(string userName)
@@ -43,9 +48,15 @@ namespace LoansManager.Services.Implementations.Services
         }
 
         public async Task<bool> UserExist(string userName, CancellationToken token)
-        => await userRepository.GetByUserName(userName) != null ? true : false;
+            => await userRepository.GetByUserName(userName) != null;
 
         public async Task<bool> UserDoesNotExist(string userName, CancellationToken token)
-        => !(await UserExist(userName, token));
+            => !(await UserExist(userName, token));
+
+        private async Task<bool> AuthenticateUser(AuthenticateUserDto credentials)
+        {
+            var user = await userRepository.GetByUserName(credentials.UserName);
+            return user != null && encypterService.GetHash(credentials.Password, user.Salt) == user.Password;
+        }
     }
 }

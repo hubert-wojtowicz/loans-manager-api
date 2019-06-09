@@ -1,11 +1,11 @@
-﻿using LoansManager.DAL.Repositories.Interfaces;
-using LoansManager.Domain;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using LoansManager.DAL.Repositories.Interfaces;
+using LoansManager.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace LoansManager.DAL.Repositories
 {
@@ -17,9 +17,6 @@ namespace LoansManager.DAL.Repositories
         {
             this.context = context;
         }
-
-        protected IQueryable<UserEntity> Get()
-            => context.Set<UserEntity>();
 
         public Task<List<UserEntity>> GetLimitedAsync(int offset, int take)
             => Get()
@@ -35,7 +32,7 @@ namespace LoansManager.DAL.Repositories
         public async Task AddAsync(UserEntity user)
         {
             await context.Set<UserEntity>().AddAsync(user);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         public Task<List<UserEntity>> GetFiltered(Expression<Func<UserEntity, bool>> predicate, int offset, int take)
@@ -43,5 +40,8 @@ namespace LoansManager.DAL.Repositories
                       .Skip(offset)
                       .Take(take)
                       .ToListAsync();
+
+        protected IQueryable<UserEntity> Get()
+            => context.Set<UserEntity>();
     }
 }

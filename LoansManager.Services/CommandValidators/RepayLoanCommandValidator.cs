@@ -1,10 +1,10 @@
-﻿using FluentValidation;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using FluentValidation;
 using LoansManager.Services.Commands;
 using LoansManager.Services.Resources;
 using LoansManager.Services.ServicesContracts;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace LoansManager.Services.CommandValidators
 {
@@ -21,7 +21,7 @@ namespace LoansManager.Services.CommandValidators
                 .WithMessage(RepayLoanCommandValidatorResource.LoanDesNotExist);
         }
 
-        Task<bool> LoanExist(Guid loanId, CancellationToken token)
+        private Task<bool> LoanExist(Guid loanId, CancellationToken token)
             => loansService.LoanExist(loanId);
     }
 }

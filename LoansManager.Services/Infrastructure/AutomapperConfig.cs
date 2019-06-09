@@ -3,7 +3,6 @@ using LoansManager.CommandHandlers.Commands;
 using LoansManager.Domain;
 using LoansManager.Services.Commands;
 using LoansManager.Services.Dtos;
-using System.Collections.Generic;
 
 namespace LoansManager.Services.Infrastructure
 {

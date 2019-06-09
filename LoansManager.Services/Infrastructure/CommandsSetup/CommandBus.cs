@@ -1,7 +1,7 @@
-﻿using Autofac;
-using FluentValidation.Results;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Autofac;
+using FluentValidation.Results;
 
 namespace LoansManager.Services.Infrastructure.CommandsSetup
 {
@@ -16,26 +16,30 @@ namespace LoansManager.Services.Infrastructure.CommandsSetup
             this.validationFactory = validationFactory;
         }
 
-        public async Task Submit<TCommand>(TCommand command) where TCommand : ICommand
+        public Task Submit<TCommand>(TCommand command)
+            where TCommand : ICommand
         {
             if (command == null)
             {
-                throw new ArgumentNullException(nameof(command),
+                throw new ArgumentNullException(
+                    nameof(command),
                     $"Command: '{typeof(TCommand).Name}' can not be null.");
             }
+
             var handler = _context.Resolve<ICommandHandler<TCommand>>();
-            await handler.HandleAsync(command);
+            return handler.HandleAsync(command);
         }
 
-        
-        public Task<ValidationResult> Validate<TCommand>(TCommand command) where TCommand : ICommand
+        public Task<ValidationResult> Validate<TCommand>(TCommand command)
+            where TCommand : ICommand
         {
             if (command == null)
             {
-                throw new ArgumentNullException(nameof(command),
+                throw new ArgumentNullException(
+                    nameof(command),
                     $"Command: '{typeof(TCommand).Name}' can not be null.");
             }
-            
+
             var validator = validationFactory.GetValidator(command.GetType());
             return validator.ValidateAsync(command);
         }

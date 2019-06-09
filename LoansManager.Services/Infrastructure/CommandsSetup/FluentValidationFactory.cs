@@ -1,6 +1,6 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using FluentValidation;
-using System;
 
 namespace LoansManager.Services.Infrastructure.CommandsSetup
 {

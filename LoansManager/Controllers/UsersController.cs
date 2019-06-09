@@ -1,8 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation;
 using LoansManager.CommandHandlers.Commands;
 using LoansManager.Domain;
+using LoansManager.Helper;
 using LoansManager.Resources;
 using LoansManager.Services.Dtos;
 using LoansManager.Services.Infrastructure.CommandsSetup;
@@ -17,24 +21,30 @@ namespace LoansManager.Controllers
     [ApiController]
     public class UsersController : ApplicationBaseController
     {
-        private readonly ApiSettings apiSettings;
-        private readonly IMapper mapper;
-        private readonly IJwtService jwtService;
-        private readonly IUserService userService;
-        private readonly ICommandBus commandBus;
+        private readonly AbstractValidator<AuthenticateUserDto> _authenticateUserDtoValidator;
+        private readonly ApiSettings _apiSettings;
+        private readonly IMapper _mapper;
+        private readonly IJwtService _jwtService;
+        private readonly IUriHelperService _uriHelperService;
+        private readonly IUserService _userService;
+        private readonly ICommandBus _commandBus;
 
         public UsersController(
+            AbstractValidator<AuthenticateUserDto> authenticateUserDtoValidator,
             ApiSettings apiSettings,
             IMapper mapper,
             IJwtService jwtService,
+            IUriHelperService uriHelperService,
             IUserService userService,
             ICommandBus commandBus)
         {
-            this.apiSettings = apiSettings;
-            this.mapper = mapper;
-            this.jwtService = jwtService;
-            this.userService = userService;
-            this.commandBus = commandBus;
+            _authenticateUserDtoValidator = authenticateUserDtoValidator;
+            _apiSettings = apiSettings;
+            _mapper = mapper;
+            _jwtService = jwtService;
+            _uriHelperService = uriHelperService;
+            _userService = userService;
+            _commandBus = commandBus;
         }
 
         /// <summary>
@@ -50,7 +60,7 @@ namespace LoansManager.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetAsync(string userName)
         {
-            var user = string.IsNullOrWhiteSpace(userName) ? null : await userService.GetAsync(userName);
+            var user = string.IsNullOrWhiteSpace(userName) ? null : await _userService.GetAsync(userName);
 
             if (user != null)
             {
@@ -75,12 +85,17 @@ namespace LoansManager.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetAsync([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
         {
-            if (take > apiSettings.MaxNumberOfRecordToGet)
+            if (take > _apiSettings.MaxNumberOfRecordToGet)
             {
-                return BadRequest(ValidationResultFactory(nameof(take), take, UserControllerResources.MaxNumberOfRecordToGetExceeded, apiSettings.MaxNumberOfRecordToGet.ToString()));
+                return BadRequest(
+                    ValidationResultFactory(
+                        nameof(take),
+                        take,
+                        UserControllerResources.MaxNumberOfRecordToGetExceeded,
+                        _apiSettings.MaxNumberOfRecordToGet.ToString(CultureInfo.InvariantCulture)));
             }
 
-            var users = await userService.GetAsync(offset, take);
+            var users = await _userService.GetAsync(offset, take);
             if (users.Any())
             {
                 return Ok(users);
@@ -102,14 +117,16 @@ namespace LoansManager.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> RegisterAsync([FromBody]RegisterUserCommand createUserDto)
         {
-            var validationResult = await commandBus.Validate(createUserDto);
+            var validationResult = await _commandBus.Validate(createUserDto);
             if (!validationResult.IsValid)
             {
                 return BadRequest(validationResult);
             }
 
-            await commandBus.Submit(createUserDto);
-            return Created($"users/{createUserDto.UserName}", mapper.Map<ViewUserDto>(createUserDto));
+            await _commandBus.Submit(createUserDto);
+#pragma warning disable CA1062 // Validate arguments of public methods
+            return Created(_uriHelperService.GetApiUrl($"api/users/{createUserDto.UserName}"), _mapper.Map<ViewUserDto>(createUserDto));
+#pragma warning restore CA1062 // Validate arguments of public methods
         }
 
         /// <summary>
@@ -123,9 +140,17 @@ namespace LoansManager.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> AuthenticateAsync([FromBody]AuthenticateUserDto credentials)
         {
-            if (await userService.AuthenticateUserAsync(credentials))
+            var validationResult = await _authenticateUserDtoValidator.ValidateAsync(credentials);
+            if (!validationResult.IsValid)
             {
-                return Ok(jwtService.GenerateToken(credentials.UserName, Roles.Admin));
+                return BadRequest(validationResult);
+            }
+
+            if (await _userService.AuthenticateUserAsync(credentials))
+            {
+#pragma warning disable CA1062 // Validate arguments of public methods
+                return Ok(_jwtService.GenerateToken(credentials.UserName, Roles.Admin));
+#pragma warning restore CA1062 // Validate arguments of public methods
             }
 
             return BadRequest(ValidationResultFactory(nameof(credentials), credentials, UserControllerResources.AuthenticationFailed));

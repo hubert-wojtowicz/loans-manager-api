@@ -2,7 +2,8 @@
 
 namespace LoansManager.Services.Infrastructure.CommandsSetup
 {
-    public interface ICommandHandler<TCommand> where TCommand : ICommand
+    public interface ICommandHandler<in TCommand>
+        where TCommand : ICommand
     {
         Task HandleAsync(TCommand command);
     }

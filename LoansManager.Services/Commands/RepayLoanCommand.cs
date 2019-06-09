@@ -1,5 +1,5 @@
-﻿using LoansManager.Services.Infrastructure.CommandsSetup;
-using System;
+﻿using System;
+using LoansManager.Services.Infrastructure.CommandsSetup;
 
 namespace LoansManager.Services.Commands
 {
