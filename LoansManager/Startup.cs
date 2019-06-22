@@ -6,11 +6,12 @@ using System.Reflection;
 using System.Text;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
 using FluentValidation;
+using LoansManager.Configuration;
 using LoansManager.DAL;
 using LoansManager.Helper;
 using LoansManager.Services.Dtos;
-using LoansManager.Services.Infrastructure;
 using LoansManager.Services.Infrastructure.IoC;
 using LoansManager.Services.Infrastructure.IoC.Modules;
 using LoansManager.Validators;
@@ -41,6 +42,7 @@ namespace LoansManager
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(AutomapperConfig));
             services.AddSwaggerGen(opt =>
             {
                 opt.SwaggerDoc(
@@ -56,7 +58,10 @@ namespace LoansManager
                     "Bearer",
                     new ApiKeyScheme
                     {
-                        In = "header", Description = "Please enter JWT with Bearer into field", Name = "Authorization", Type = "apiKey",
+                        In = "header",
+                        Description = "Please enter JWT with Bearer into field",
+                        Name = "Authorization",
+                        Type = "apiKey",
                     });
 
                 opt.AddSecurityRequirement(
@@ -69,8 +74,8 @@ namespace LoansManager
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 opt.IncludeXmlComments(xmlPath);
-            })
-            .AddMvc(opt =>
+            });
+            services.AddMvc(opt =>
             {
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
@@ -78,32 +83,29 @@ namespace LoansManager
                 opt.Filters.Add(new AuthorizeFilter(policy));
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            services
-                .AddHttpContextAccessor()
-                .AddSingleton<IUriHelperService, UriHelperService>()
-                .AddScoped<AbstractValidator<AuthenticateUserDto>, AuthenticateUserDtoValidator>()
-                .AddSingleton(AutomapperConfig.Initialize())
-                .AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")))
-                .AddAuthentication(opt =>
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IUriHelperService, UriHelperService>();
+            services.AddScoped<AbstractValidator<AuthenticateUserDto>, AuthenticateUserDtoValidator>();
+            services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(opt =>
+            {
+                opt.TokenValidationParameters = new TokenValidationParameters
                 {
-                    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(opt =>
-                {
-                    opt.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        ValidAudience = Configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"])),
-                    };
-                });
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"])),
+                };
+            });
 
             var builder = new ContainerBuilder();
             AutofacConfig.Register(builder);
