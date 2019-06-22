@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LoansManager.Util\LoansManager.Util.csproj" />
+    <ProjectReference Include="..\LoansManager.Common\LoansManager.Common.csproj" />
   </ItemGroup>
 
 </Project>

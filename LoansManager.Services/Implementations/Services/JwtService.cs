@@ -3,10 +3,10 @@ using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using LoansManager.Common.Extensions;
 using LoansManager.Services.Dtos;
 using LoansManager.Services.Infrastructure.SettingsModels;
 using LoansManager.Services.ServicesContracts;
-using LoansManager.Util;
 using Microsoft.IdentityModel.Tokens;
 
 namespace LoansManager.Services.Implementations.Services

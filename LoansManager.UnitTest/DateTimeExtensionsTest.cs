@@ -1,5 +1,5 @@
 using System;
-using LoansManager.Util;
+using LoansManager.Common.Extensions;
 using NUnit.Framework;
 
 namespace LoansManager.UnitTest

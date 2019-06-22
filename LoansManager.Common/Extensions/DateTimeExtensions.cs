@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LoansManager.Util
+namespace LoansManager.Common.Extensions
 {
     public static class DateTimeExtensions
     {

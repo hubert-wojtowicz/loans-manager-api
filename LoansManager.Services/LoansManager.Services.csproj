@@ -6,8 +6,8 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\LoansManager.Common\LoansManager.Common.csproj" />
     <ProjectReference Include="..\LoansManager.DAL\LoansManager.DAL.csproj" />
-    <ProjectReference Include="..\LoansManager.Util\LoansManager.Util.csproj" />
   </ItemGroup>
 
   <ItemGroup>

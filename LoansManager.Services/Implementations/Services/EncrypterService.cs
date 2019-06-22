@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 using LoansManager.Services.ServicesContracts;
-using LoansManager.Util;
+using LoansManager.Common;
 
 namespace LoansManager.Services.Implementations.Services
 {
