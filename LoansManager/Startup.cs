@@ -8,13 +8,12 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using FluentValidation;
-using LoansManager.Configuration;
+using LoansManager.BussinesLogic.Dtos.Users;
+using LoansManager.BussinesLogic.Infrastructure.IoC.Modules;
+using LoansManager.WebApi.Configuration;
 using LoansManager.DAL;
-using LoansManager.Helper;
-using LoansManager.Services.Dtos;
-using LoansManager.Services.Infrastructure.IoC;
-using LoansManager.Services.Infrastructure.IoC.Modules;
-using LoansManager.Validators;
+using LoansManager.WebApi.Helper;
+using LoansManager.WebApi.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -27,7 +26,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace LoansManager
+namespace LoansManager.WebApi
 {
     public class Startup
     {
@@ -119,7 +118,7 @@ namespace LoansManager
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
         {
-            DbContextDataSeeder.SeedData<ApplicationDbContext>(app);
+            app.SeedData<ApplicationDbContext>();
 
             if (env.IsDevelopment())
             {

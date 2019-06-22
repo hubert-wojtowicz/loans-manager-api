@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using LoansManager.Services.Dtos;
+using LoansManager.BussinesLogic.Dtos.Users;
 
-namespace LoansManager.Validators
+namespace LoansManager.WebApi.Validators
 {
     public class AuthenticateUserDtoValidator : AbstractValidator<AuthenticateUserDto>
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LoansManager.Helper
+namespace LoansManager.WebApi.Helper
 {
     public interface IUriHelperService
     {

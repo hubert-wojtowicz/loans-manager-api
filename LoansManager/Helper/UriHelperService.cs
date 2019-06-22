@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http;
 
-namespace LoansManager.Helper
+namespace LoansManager.WebApi.Helper
 {
     public class UriHelperService : IUriHelperService
     {

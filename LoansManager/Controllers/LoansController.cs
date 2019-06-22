@@ -3,16 +3,16 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using LoansManager.Controllers.Models.LoansController;
-using LoansManager.Helper;
-using LoansManager.Resources;
-using LoansManager.Services.Commands;
-using LoansManager.Services.Infrastructure.CommandsSetup;
-using LoansManager.Services.Infrastructure.SettingsModels;
-using LoansManager.Services.ServicesContracts;
+using LoansManager.BussinesLogic.Commands.Models;
+using LoansManager.BussinesLogic.Infrastructure.CommandsSetup;
+using LoansManager.BussinesLogic.Infrastructure.SettingsModels;
+using LoansManager.BussinesLogic.Interfaces;
+using LoansManager.WebApi.Controllers.Models.LoansController;
+using LoansManager.WebApi.Helper;
+using LoansManager.WebApi.Resources;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LoansManager.Controllers
+namespace LoansManager.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

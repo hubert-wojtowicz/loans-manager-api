@@ -2,7 +2,7 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LoansManager.Controllers
+namespace LoansManager.WebApi.Controllers
 {
     public class ApplicationBaseController : ControllerBase
     {

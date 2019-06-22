@@ -1,4 +1,4 @@
-﻿namespace LoansManager.Resources
+﻿namespace LoansManager.WebApi.Resources
 {
     public static class LoansControllerResources
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace LoansManager.WebApi.Controllers.Models.LoansController
+namespace LoansManager.BussinesLogic.Dtos.Loans
 {
-    public class GetLoanResponseModel
+    public class ViewLoanDto
     {
         public Guid Id { get; set; }
 

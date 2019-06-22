@@ -3,18 +3,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation;
-using LoansManager.CommandHandlers.Commands;
+using LoansManager.BussinesLogic.Dtos.Users;
+using LoansManager.BussinesLogic.Infrastructure.CommandsSetup;
+using LoansManager.BussinesLogic.Infrastructure.SettingsModels;
+using LoansManager.BussinesLogic.Interfaces;
+using LoansManager.CommandHandlers.Commands.Models;
 using LoansManager.DAL.Entities;
-using LoansManager.Helper;
-using LoansManager.Resources;
-using LoansManager.Services.Dtos;
-using LoansManager.Services.Infrastructure.CommandsSetup;
-using LoansManager.Services.Infrastructure.SettingsModels;
-using LoansManager.Services.ServicesContracts;
+using LoansManager.WebApi.Helper;
+using LoansManager.WebApi.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LoansManager.Controllers
+namespace LoansManager.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -59,7 +59,7 @@ namespace LoansManager.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> Get(string userName)
         {
-            var user = string.IsNullOrWhiteSpace(userName) ? null : await _userService.GetAsync(userName);
+            var user = string.IsNullOrWhiteSpace(userName) ? null : await _userService.FindByUserName(userName);
 
             if (user != null)
             {
@@ -94,7 +94,7 @@ namespace LoansManager.Controllers
                         _apiSettings.MaxNumberOfRecordToGet.ToString(CultureInfo.InvariantCulture)));
             }
 
-            var users = await _userService.Get(offset, take);
+            var users = await _userService.SelectList(offset, take);
             if (users.Any())
             {
                 return Ok(users);
