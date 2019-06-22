@@ -9,21 +9,21 @@ namespace LoansManager.Services.Implementations.CommandHandlers
 {
     public class CreateLoanCommandHandler : ICommandHandler<CreateLoanCommand>
     {
-        private readonly ILoansRepository loansRepository;
-        private readonly IMapper mapper;
+        private readonly ILoansRepository _loansRepository;
+        private readonly IMapper _mapper;
 
         public CreateLoanCommandHandler(
             ILoansRepository loansRepository,
             IMapper mapper)
         {
-            this.loansRepository = loansRepository;
-            this.mapper = mapper;
+            _loansRepository = loansRepository;
+            _mapper = mapper;
         }
 
         public Task HandleAsync(CreateLoanCommand command)
         {
-            var loan = mapper.Map<LoanEntity>(command);
-            return loansRepository.AddAsync(loan);
+            var loan = _mapper.Map<LoanEntity>(command);
+            return _loansRepository.Add(loan);
         }
     }
 }

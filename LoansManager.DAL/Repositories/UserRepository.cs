@@ -18,7 +18,7 @@ namespace LoansManager.DAL.Repositories
             this.context = context;
         }
 
-        public Task<List<UserEntity>> GetLimitedAsync(int offset, int take)
+        public Task<List<UserEntity>> GetLimited(int offset, int take)
             => Get()
                 .OrderBy(x => x.UserName)
                 .Skip(offset)
@@ -29,7 +29,7 @@ namespace LoansManager.DAL.Repositories
             => Get()
                 .SingleOrDefaultAsync(x => x.UserName == userName);
 
-        public async Task AddAsync(UserEntity user)
+        public async Task Add(UserEntity user)
         {
             await context.Set<UserEntity>().AddAsync(user);
             await context.SaveChangesAsync();

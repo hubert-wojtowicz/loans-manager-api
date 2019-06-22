@@ -18,7 +18,7 @@ namespace LoansManager.DAL.Repositories
             this.context = context;
         }
 
-        public Task<List<LoanEntity>> GetLimitedWithLenderAndBorrowerAsync(int offset, int take)
+        public Task<List<LoanEntity>> GetLimitedWithLenderAndBorrower(int offset, int take)
             => Get()
                 .Include(x => x.Lender)
                 .Include(x => x.Borrower)
@@ -27,23 +27,23 @@ namespace LoansManager.DAL.Repositories
                 .Take(take)
                 .ToListAsync();
 
-        public Task<LoanEntity> GetWithLenderAndBorrowerAync(Guid id)
+        public Task<LoanEntity> GetWithLenderAndBorrower(Guid id)
             => Get()
                 .Include(x => x.Lender)
                 .Include(x => x.Borrower)
                 .SingleOrDefaultAsync(x => x.Id == id);
 
-        public async Task AddAsync(LoanEntity loanEntity)
+        public async Task Add(LoanEntity loanEntity)
         {
             await context.Set<LoanEntity>().AddAsync(loanEntity);
             await context.SaveChangesAsync();
         }
 
-        public Task<LoanEntity> GetAsync(Guid id)
+        public Task<LoanEntity> Get(Guid id)
             => Get()
                 .SingleOrDefaultAsync(x => x.Id == id);
 
-        public Task UpdateAysnc(LoanEntity loan)
+        public Task Update(LoanEntity loan)
         {
             context.Loans.Update(loan);
             return context.SaveChangesAsync();
@@ -56,7 +56,7 @@ namespace LoansManager.DAL.Repositories
                       .Take(take)
                       .ToListAsync();
 
-        public Task<List<dynamic>> GeColumnDistnctAsync(Expression<Func<LoanEntity, dynamic>> selector, int offset, int take)
+        public Task<List<dynamic>> GeColumnDistnct(Expression<Func<LoanEntity, dynamic>> selector, int offset, int take)
             => Get()
                 .OrderBy(selector)
                 .Select(selector)

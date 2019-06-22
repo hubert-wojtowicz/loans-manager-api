@@ -11,48 +11,48 @@ namespace LoansManager.Services.Implementations.Services
 {
     public class LoansService : ILoansService
     {
-        private readonly IMapper mapper;
-        private readonly ILoansRepository loansRepository;
+        private readonly IMapper _mapper;
+        private readonly ILoansRepository _loansRepository;
 
         public LoansService(
             IMapper mapper,
             ILoansRepository loansRepository)
         {
-            this.mapper = mapper;
-            this.loansRepository = loansRepository;
+            _mapper = mapper;
+            _loansRepository = loansRepository;
         }
 
         public async Task<ViewLoanDto> Get(Guid id)
         {
-            var loansWithRelatedUsers = await loansRepository.GetWithLenderAndBorrowerAync(id);
-            return mapper.Map<ViewLoanDto>(loansWithRelatedUsers);
+            var loansWithRelatedUsers = await _loansRepository.GetWithLenderAndBorrower(id);
+            return _mapper.Map<ViewLoanDto>(loansWithRelatedUsers);
         }
 
         public async Task<IEnumerable<ViewLoanDto>> Get(int offset = 0, int take = 15)
         {
-            var loans = await loansRepository.GetLimitedWithLenderAndBorrowerAsync(offset, take);
-            return mapper.Map<IEnumerable<ViewLoanDto>>(loans);
+            var loans = await _loansRepository.GetLimitedWithLenderAndBorrower(offset, take);
+            return _mapper.Map<IEnumerable<ViewLoanDto>>(loans);
         }
 
         public async Task<IEnumerable<ViewLoanBorrowerDto>> GetBorrowers(int offset = 0, int take = 15)
         {
-            var borrowers = await loansRepository.GeColumnDistnctAsync(x => x.LenderId, offset, take);
+            var borrowers = await _loansRepository.GeColumnDistnct(x => x.LenderId, offset, take);
             return borrowers.Select(x => new ViewLoanBorrowerDto { BorrowerId = x.ToString() });
         }
 
         public async Task<IEnumerable<ViewLoanLenderDto>> GetLenders(int offset = 0, int take = 15)
         {
-            var lenders = await loansRepository.GeColumnDistnctAsync(x => x.LenderId, offset, take);
+            var lenders = await _loansRepository.GeColumnDistnct(x => x.LenderId, offset, take);
             return lenders.Select(x => new ViewLoanLenderDto { LenderId = x.ToString() });
         }
 
         public async Task<IEnumerable<ViewLoanDto>> GetUserLoans(string userId, int offset = 0, int take = 15)
         {
-            var borrowedLoans = await loansRepository.GetFiltered(x => x.BorrowerId == userId, offset, take);
-            return mapper.Map<IEnumerable<ViewLoanDto>>(borrowedLoans);
+            var borrowedLoans = await _loansRepository.GetFiltered(x => x.BorrowerId == userId, offset, take);
+            return _mapper.Map<IEnumerable<ViewLoanDto>>(borrowedLoans);
         }
 
         public async Task<bool> LoanExist(Guid loanId)
-            => await loansRepository.GetAsync(loanId) == null;
+            => await _loansRepository.Get(loanId) == null;
     }
 }

@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace LoansManager.DAL
 {

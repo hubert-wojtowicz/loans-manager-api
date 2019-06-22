@@ -117,10 +117,10 @@ namespace LoansManager.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> Register([FromBody]RegisterUserCommand createUserDto)
         {
-            var validationResult = await _commandBus.Validate(createUserDto);
-            if (!validationResult.IsValid)
+            var validationresult = await _commandBus.Validate(createUserDto);
+            if (!validationresult.IsValid)
             {
-                return BadRequest(validationResult);
+                return BadRequest(validationresult);
             }
 
             await _commandBus.Submit(createUserDto);

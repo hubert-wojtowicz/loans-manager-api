@@ -2,6 +2,8 @@
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using LoansManager.Controllers.Models.LoansController;
 using LoansManager.Helper;
 using LoansManager.Resources;
 using LoansManager.Services.Commands;
@@ -16,17 +18,20 @@ namespace LoansManager.Controllers
     [ApiController]
     public class LoansController : ApplicationBaseController
     {
+        private readonly IMapper _mapper;
         private readonly ICommandBus _commandBus;
         private readonly ILoansService _loansService;
         private readonly IUriHelperService _uriHelperService;
         private readonly ApiSettings _apiSettings;
 
         public LoansController(
+            IMapper mapper,
             ICommandBus commandBus,
             ILoansService loansService,
             IUriHelperService uriHelperService,
             ApiSettings apiSettings)
         {
+            _mapper = mapper;
             _commandBus = commandBus;
             _loansService = loansService;
             _uriHelperService = uriHelperService;
@@ -42,15 +47,15 @@ namespace LoansManager.Controllers
         /// <response code="404">When no loan found.</response>
         [HttpGet]
         [Route("{id}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(200, Type = typeof(GetLoanResponseModel))]
+        [ProducesResponseType(404, Type = typeof(Guid))]
         public async Task<IActionResult> Get(Guid id)
         {
             var loan = await _loansService.Get(id);
 
             if (loan != null)
             {
-                return Ok(loan);
+                return Ok(_mapper.Map<GetLoanResponseModel>(loan));
             }
 
             return NotFound(id);

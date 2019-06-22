@@ -8,11 +8,11 @@ namespace LoansManager.Services.Implementations.CommandHandlers
 {
     public class RepayLoanCommandHandler : ICommandHandler<RepayLoanCommand>
     {
-        private readonly ILoansRepository loansRepository;
+        private readonly ILoansRepository _loansRepository;
 
         public RepayLoanCommandHandler(ILoansRepository loansRepository)
         {
-            this.loansRepository = loansRepository;
+            _loansRepository = loansRepository;
         }
 
         public Task HandleAsync(RepayLoanCommand command)
@@ -27,10 +27,10 @@ namespace LoansManager.Services.Implementations.CommandHandlers
 
         private async Task Repay(RepayLoanCommand command)
         {
-            var loan = await loansRepository.GetAsync(command.LoanId);
+            var loan = await _loansRepository.Get(command.LoanId);
             loan.IsRepaid = true;
             loan.RepaidDate = DateTime.UtcNow;
-            await loansRepository.UpdateAysnc(loan);
+            await _loansRepository.Update(loan);
         }
     }
 }

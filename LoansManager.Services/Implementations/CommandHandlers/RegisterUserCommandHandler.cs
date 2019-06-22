@@ -38,7 +38,7 @@ namespace LoansManager.Services.Implementations.CommandHandlers
             user.Salt = salt;
             user.Password = passwordHash;
 
-            return _userRepository.AddAsync(user);
+            return _userRepository.Add(user);
         }
     }
 }

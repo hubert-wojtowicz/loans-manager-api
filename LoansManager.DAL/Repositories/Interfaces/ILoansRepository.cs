@@ -8,18 +8,18 @@ namespace LoansManager.DAL.Repositories.Interfaces
 {
     public interface ILoansRepository
     {
-        Task<List<LoanEntity>> GetLimitedWithLenderAndBorrowerAsync(int offset, int take);
+        Task<List<LoanEntity>> GetLimitedWithLenderAndBorrower(int offset, int take);
 
-        Task<LoanEntity> GetWithLenderAndBorrowerAync(Guid id);
+        Task<LoanEntity> GetWithLenderAndBorrower(Guid id);
 
-        Task AddAsync(LoanEntity loanEntity);
+        Task Add(LoanEntity loanEntity);
 
-        Task<LoanEntity> GetAsync(Guid id);
+        Task<LoanEntity> Get(Guid id);
 
-        Task UpdateAysnc(LoanEntity loan);
+        Task Update(LoanEntity loan);
 
         Task<List<LoanEntity>> GetFiltered(Expression<Func<LoanEntity, bool>> predicate, int offset, int take);
 
-        Task<List<dynamic>> GeColumnDistnctAsync(Expression<Func<LoanEntity, dynamic>> selector, int offset, int take);
+        Task<List<dynamic>> GeColumnDistnct(Expression<Func<LoanEntity, dynamic>> selector, int offset, int take);
     }
 }
