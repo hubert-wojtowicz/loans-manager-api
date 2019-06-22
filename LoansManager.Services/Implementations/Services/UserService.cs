@@ -25,20 +25,20 @@ namespace LoansManager.Services.Implementations.Services
             this.userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<ViewUserDto>> GetAsync(int offset = 0, int take = 15)
+        public async Task<IEnumerable<ViewUserDto>> Get(int offset = 0, int take = 15)
         {
             var users = await userRepository.GetLimitedAsync(offset, take);
             return mapper.Map<IEnumerable<ViewUserDto>>(users);
         }
 
-        public Task<bool> AuthenticateUserAsync(AuthenticateUserDto credentials)
+        public Task<bool> AuthenticateUser(AuthenticateUserDto credentials)
         {
             if (credentials == null)
             {
                 throw new ArgumentNullException($"{nameof(credentials)} can not be null.");
             }
 
-            return AuthenticateUser(credentials);
+            return AuthenticateUserLogic(credentials);
         }
 
         public async Task<ViewUserDto> GetAsync(string userName)
@@ -53,7 +53,7 @@ namespace LoansManager.Services.Implementations.Services
         public async Task<bool> UserDoesNotExist(string userName, CancellationToken token)
             => !(await UserExist(userName, token));
 
-        private async Task<bool> AuthenticateUser(AuthenticateUserDto credentials)
+        private async Task<bool> AuthenticateUserLogic(AuthenticateUserDto credentials)
         {
             var user = await userRepository.GetByUserName(credentials.UserName);
             return user != null && encypterService.GetHash(credentials.Password, user.Salt) == user.Password;

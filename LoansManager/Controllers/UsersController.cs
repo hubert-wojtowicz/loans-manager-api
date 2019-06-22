@@ -58,7 +58,7 @@ namespace LoansManager.Controllers
         [Route("{userName}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetAsync(string userName)
+        public async Task<IActionResult> Get(string userName)
         {
             var user = string.IsNullOrWhiteSpace(userName) ? null : await _userService.GetAsync(userName);
 
@@ -95,7 +95,7 @@ namespace LoansManager.Controllers
                         _apiSettings.MaxNumberOfRecordToGet.ToString(CultureInfo.InvariantCulture)));
             }
 
-            var users = await _userService.GetAsync(offset, take);
+            var users = await _userService.Get(offset, take);
             if (users.Any())
             {
                 return Ok(users);
@@ -115,7 +115,7 @@ namespace LoansManager.Controllers
         [AllowAnonymous]
         [ProducesResponseType(201)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> RegisterAsync([FromBody]RegisterUserCommand createUserDto)
+        public async Task<IActionResult> Register([FromBody]RegisterUserCommand createUserDto)
         {
             var validationResult = await _commandBus.Validate(createUserDto);
             if (!validationResult.IsValid)
@@ -138,7 +138,7 @@ namespace LoansManager.Controllers
         [HttpPost]
         [Route("Auth")]
         [AllowAnonymous]
-        public async Task<IActionResult> AuthenticateAsync([FromBody]AuthenticateUserDto credentials)
+        public async Task<IActionResult> Authenticate([FromBody]AuthenticateUserDto credentials)
         {
             var validationResult = await _authenticateUserDtoValidator.ValidateAsync(credentials);
             if (!validationResult.IsValid)
@@ -146,7 +146,7 @@ namespace LoansManager.Controllers
                 return BadRequest(validationResult);
             }
 
-            if (await _userService.AuthenticateUserAsync(credentials))
+            if (await _userService.AuthenticateUser(credentials))
             {
 #pragma warning disable CA1062 // Validate arguments of public methods
                 return Ok(_jwtService.GenerateToken(credentials.UserName, Roles.Admin));

@@ -8,7 +8,6 @@ using LoansManager.Services.Commands;
 using LoansManager.Services.Infrastructure.CommandsSetup;
 using LoansManager.Services.Infrastructure.SettingsModels;
 using LoansManager.Services.ServicesContracts;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LoansManager.Controllers
@@ -45,9 +44,9 @@ namespace LoansManager.Controllers
         [Route("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetAsync(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            var loan = await _loansService.GetAsync(id);
+            var loan = await _loansService.Get(id);
 
             if (loan != null)
             {
@@ -70,14 +69,14 @@ namespace LoansManager.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetAsync([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
+        public async Task<IActionResult> Get([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
         {
             if (take > _apiSettings.MaxNumberOfRecordToGet)
             {
                 return BadRequest(ValidationResultFactory(nameof(take), take, UserControllerResources.MaxNumberOfRecordToGetExceeded, _apiSettings.MaxNumberOfRecordToGet.ToString(CultureInfo.InvariantCulture)));
             }
 
-            var loans = await _loansService.GetAsync(offset, take);
+            var loans = await _loansService.Get(offset, take);
             if (loans.Any())
             {
                 return Ok(loans);
@@ -100,14 +99,14 @@ namespace LoansManager.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetBorrowersAsync([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
+        public async Task<IActionResult> GetBorrowers([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
         {
             if (take > _apiSettings.MaxNumberOfRecordToGet)
             {
                 return BadRequest(ValidationResultFactory(nameof(take), take, UserControllerResources.MaxNumberOfRecordToGetExceeded, _apiSettings.MaxNumberOfRecordToGet.ToString(CultureInfo.InvariantCulture)));
             }
 
-            var users = await _loansService.GetBorrowersAsync(offset, take);
+            var users = await _loansService.GetBorrowers(offset, take);
             if (users.Any())
             {
                 return Ok(users);
@@ -130,14 +129,14 @@ namespace LoansManager.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetLendersAsync([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
+        public async Task<IActionResult> GetLenders([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
         {
             if (take > _apiSettings.MaxNumberOfRecordToGet)
             {
                 return BadRequest(ValidationResultFactory(nameof(take), take, UserControllerResources.MaxNumberOfRecordToGetExceeded, _apiSettings.MaxNumberOfRecordToGet.ToString(CultureInfo.InvariantCulture)));
             }
 
-            var users = await _loansService.GetLendersAsync(offset, take);
+            var users = await _loansService.GetLenders(offset, take);
             if (users.Any())
             {
                 return Ok(users);
@@ -161,14 +160,14 @@ namespace LoansManager.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetUserLoansAsync(string userId, [FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
+        public async Task<IActionResult> GetUserLoans(string userId, [FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "take")] int take = 15)
         {
             if (take > _apiSettings.MaxNumberOfRecordToGet)
             {
                 return BadRequest(ValidationResultFactory(nameof(take), take, UserControllerResources.MaxNumberOfRecordToGetExceeded, _apiSettings.MaxNumberOfRecordToGet.ToString(CultureInfo.InvariantCulture)));
             }
 
-            var loans = await _loansService.GetUserLoansAsync(userId, offset, take);
+            var loans = await _loansService.GetUserLoans(userId, offset, take);
             if (loans.Any())
             {
                 return Ok(loans);
@@ -186,7 +185,7 @@ namespace LoansManager.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateAsync([FromBody]CreateLoanCommand createLoanCommand)
+        public async Task<IActionResult> Create([FromBody]CreateLoanCommand createLoanCommand)
         {
             var validationResult = await _commandBus.Validate(createLoanCommand);
             if (!validationResult.IsValid)
@@ -210,7 +209,7 @@ namespace LoansManager.Controllers
         [Route("Repay")]
         [ProducesResponseType(202)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> RepayAsync([FromBody]RepayLoanCommand repayLoanCommand)
+        public async Task<IActionResult> Repay([FromBody]RepayLoanCommand repayLoanCommand)
         {
             var validationResult = await _commandBus.Validate(repayLoanCommand);
             if (!validationResult.IsValid)
