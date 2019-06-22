@@ -1,11 +1,10 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation;
 using LoansManager.CommandHandlers.Commands;
-using LoansManager.Domain;
+using LoansManager.DAL.Entities;
 using LoansManager.Helper;
 using LoansManager.Resources;
 using LoansManager.Services.Dtos;

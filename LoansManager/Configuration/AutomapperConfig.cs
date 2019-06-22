@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using LoansManager.CommandHandlers.Commands;
-using LoansManager.Domain;
+using LoansManager.DAL.Entities;
 using LoansManager.Services.Commands;
 using LoansManager.Services.Dtos;
 

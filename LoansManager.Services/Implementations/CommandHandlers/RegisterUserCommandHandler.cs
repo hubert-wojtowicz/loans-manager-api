@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using LoansManager.CommandHandlers.Commands;
+using LoansManager.DAL.Entities;
 using LoansManager.DAL.Repositories.Interfaces;
-using LoansManager.Domain;
 using LoansManager.Services.Infrastructure.CommandsSetup;
 using LoansManager.Services.ServicesContracts;
 

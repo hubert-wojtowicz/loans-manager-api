@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LoansManager.Domain
+namespace LoansManager.DAL.Entities
 {
     public class LoanEntity
     {

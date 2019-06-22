@@ -1,5 +1,5 @@
 ﻿using System;
-using LoansManager.Domain;
+using LoansManager.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace LoansManager.DAL

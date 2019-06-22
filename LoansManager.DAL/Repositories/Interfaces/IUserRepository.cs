@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using LoansManager.Domain;
+using LoansManager.DAL.Entities;
 
 namespace LoansManager.DAL.Repositories.Interfaces
 {
