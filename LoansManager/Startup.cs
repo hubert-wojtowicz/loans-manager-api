@@ -39,46 +39,45 @@ namespace LoansManager
 
         private static IContainer AutofacContainer { get; set; }
 
-        // This method gets called by the runtime. Use this method to add services to the Description.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddSwaggerGen(opt =>
-                {
-                    opt.SwaggerDoc(
-                        Configuration["Api:Name"],
-                        new Info
-                        {
-                            Title = Configuration["Api:Title"],
-                            Version = Configuration["Api:Version"],
-                            Description = Configuration["Api:Description"],
-                        });
+            services.AddSwaggerGen(opt =>
+            {
+                opt.SwaggerDoc(
+                    Configuration["Api:Name"],
+                    new Info
+                    {
+                        Title = Configuration["Api:Title"],
+                        Version = Configuration["Api:Version"],
+                        Description = Configuration["Api:Description"],
+                    });
 
-                    opt.AddSecurityDefinition(
-                        "Bearer",
-                        new ApiKeyScheme
-                        {
-                            In = "header", Description = "Please enter JWT with Bearer into field", Name = "Authorization", Type = "apiKey",
-                        });
+                opt.AddSecurityDefinition(
+                    "Bearer",
+                    new ApiKeyScheme
+                    {
+                        In = "header", Description = "Please enter JWT with Bearer into field", Name = "Authorization", Type = "apiKey",
+                    });
 
-                    opt.AddSecurityRequirement(
-                        new Dictionary<string, IEnumerable<string>>
-                        {
-                            { "Bearer", Enumerable.Empty<string>() },
-                        });
+                opt.AddSecurityRequirement(
+                    new Dictionary<string, IEnumerable<string>>
+                    {
+                        { "Bearer", Enumerable.Empty<string>() },
+                    });
 
-                    // Set the comments path for the Swagger JSON and UI.
-                    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                    opt.IncludeXmlComments(xmlPath);
-                })
-                .AddMvc(opt =>
-                {
-                    var policy = new AuthorizationPolicyBuilder()
-                        .RequireAuthenticatedUser()
-                        .Build();
-                    opt.Filters.Add(new AuthorizeFilter(policy));
-                }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                opt.IncludeXmlComments(xmlPath);
+            })
+            .AddMvc(opt =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                opt.Filters.Add(new AuthorizeFilter(policy));
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services
                 .AddHttpContextAccessor()
@@ -116,9 +115,10 @@ namespace LoansManager
             return new AutofacServiceProvider(AutofacContainer);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
         {
+            DbContextDataSeeder.SeedData<ApplicationDbContext>(app);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
