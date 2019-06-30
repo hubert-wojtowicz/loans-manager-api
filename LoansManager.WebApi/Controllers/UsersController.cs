@@ -8,8 +8,8 @@ using LoansManager.BussinesLogic.Infrastructure.CommandsSetup;
 using LoansManager.BussinesLogic.Infrastructure.SettingsModels;
 using LoansManager.BussinesLogic.Interfaces;
 using LoansManager.CommandHandlers.Commands.Models;
+using LoansManager.Common.Services;
 using LoansManager.DAL.Entities;
-using LoansManager.WebApi.Helper;
 using LoansManager.WebApi.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +24,7 @@ namespace LoansManager.WebApi.Controllers
         private readonly ApiSettings _apiSettings;
         private readonly IMapper _mapper;
         private readonly IJwtService _jwtService;
-        private readonly IUriHelperService _uriHelperService;
+        private readonly IHttpContextService _uriHelperService;
         private readonly IUserService _userService;
         private readonly ICommandBus _commandBus;
 
@@ -33,7 +33,7 @@ namespace LoansManager.WebApi.Controllers
             ApiSettings apiSettings,
             IMapper mapper,
             IJwtService jwtService,
-            IUriHelperService uriHelperService,
+            IHttpContextService uriHelperService,
             IUserService userService,
             ICommandBus commandBus)
         {

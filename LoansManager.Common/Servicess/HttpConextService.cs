@@ -1,13 +1,13 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http;
 
-namespace LoansManager.WebApi.Helper
+namespace LoansManager.Common.Services
 {
-    public class UriHelperService : IUriHelperService
+    public class HttpConextService : IHttpContextService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UriHelperService(IHttpContextAccessor httpContextAccessor)
+        public HttpConextService(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }

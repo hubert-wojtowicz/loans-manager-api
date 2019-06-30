@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\Models\BalanceReport\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

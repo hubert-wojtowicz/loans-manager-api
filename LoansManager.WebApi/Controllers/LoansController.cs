@@ -7,8 +7,8 @@ using LoansManager.BussinesLogic.Commands.Models;
 using LoansManager.BussinesLogic.Infrastructure.CommandsSetup;
 using LoansManager.BussinesLogic.Infrastructure.SettingsModels;
 using LoansManager.BussinesLogic.Interfaces;
+using LoansManager.Common.Services;
 using LoansManager.WebApi.Controllers.Models.LoansController;
-using LoansManager.WebApi.Helper;
 using LoansManager.WebApi.Resources;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,14 +21,14 @@ namespace LoansManager.WebApi.Controllers
         private readonly IMapper _mapper;
         private readonly ICommandBus _commandBus;
         private readonly ILoansService _loansService;
-        private readonly IUriHelperService _uriHelperService;
+        private readonly IHttpContextService _uriHelperService;
         private readonly ApiSettings _apiSettings;
 
         public LoansController(
             IMapper mapper,
             ICommandBus commandBus,
             ILoansService loansService,
-            IUriHelperService uriHelperService,
+            IHttpContextService uriHelperService,
             ApiSettings apiSettings)
         {
             _mapper = mapper;

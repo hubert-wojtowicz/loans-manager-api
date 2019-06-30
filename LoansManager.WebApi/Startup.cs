@@ -10,9 +10,9 @@ using AutoMapper;
 using FluentValidation;
 using LoansManager.BussinesLogic.Dtos.Users;
 using LoansManager.BussinesLogic.Infrastructure.IoC.Modules;
-using LoansManager.WebApi.Configuration;
+using LoansManager.Common.Services;
 using LoansManager.DAL;
-using LoansManager.WebApi.Helper;
+using LoansManager.WebApi.Configuration;
 using LoansManager.WebApi.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -83,7 +83,7 @@ namespace LoansManager.WebApi
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddHttpContextAccessor();
-            services.AddSingleton<IUriHelperService, UriHelperService>();
+            services.AddSingleton<IHttpContextService, HttpConextService>();
             services.AddScoped<AbstractValidator<AuthenticateUserDto>, AuthenticateUserDtoValidator>();
             services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAuthentication(opt =>
